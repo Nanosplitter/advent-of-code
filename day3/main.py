@@ -14,13 +14,19 @@ def sum_complete_part_numbers(lines):
     total_sum = 0
 
     def is_adjacent_to_symbol(column, line):
+        surrounding_symbols = []
+
         # check upper left
         if column > 0 and line > 0 and lines[line - 1][column - 1] not in non_symbols:
-            return (True, column - 1, line - 1, lines[line - 1][column - 1])
+            surrounding_symbols.append(
+                (True, column - 1, line - 1, lines[line - 1][column - 1])
+            )
 
         # check up
         if line > 0 and lines[line - 1][column] not in non_symbols:
-            return (True, column, line - 1, lines[line - 1][column])
+            surrounding_symbols.append(
+                (True, column, line - 1, lines[line - 1][column])
+            )
 
         # check upper right
         if (
@@ -28,15 +34,21 @@ def sum_complete_part_numbers(lines):
             and line > 0
             and lines[line - 1][column + 1] not in non_symbols
         ):
-            return (True, column + 1, line - 1, lines[line - 1][column + 1])
+            surrounding_symbols.append(
+                (True, column + 1, line - 1, lines[line - 1][column + 1])
+            )
 
         # check left
         if column > 0 and lines[line][column - 1] not in non_symbols:
-            return (True, column - 1, line, lines[line][column - 1])
+            surrounding_symbols.append(
+                (True, column - 1, line, lines[line][column - 1])
+            )
 
         # check right
         if column < len(lines[line]) - 1 and lines[line][column + 1] not in non_symbols:
-            return (True, column + 1, line, lines[line][column + 1])
+            surrounding_symbols.append(
+                (True, column + 1, line, lines[line][column + 1])
+            )
 
         # check lower left
         if (
@@ -44,11 +56,15 @@ def sum_complete_part_numbers(lines):
             and line < len(lines) - 1
             and lines[line + 1][column - 1] not in non_symbols
         ):
-            return (True, column - 1, line + 1, lines[line + 1][column - 1])
+            surrounding_symbols.append(
+                (True, column - 1, line + 1, lines[line + 1][column - 1])
+            )
 
         # check down
         if line < len(lines) - 1 and lines[line + 1][column] not in non_symbols:
-            return (True, column, line + 1, lines[line + 1][column])
+            surrounding_symbols.append(
+                (True, column, line + 1, lines[line + 1][column])
+            )
 
         # check lower right
         if (
@@ -56,9 +72,12 @@ def sum_complete_part_numbers(lines):
             and line < len(lines) - 1
             and lines[line + 1][column + 1] not in non_symbols
         ):
-            return (True, column + 1, line + 1, lines[line + 1][column + 1])
+            surrounding_symbols.append(
+                (True, column + 1, line + 1, lines[line + 1][column + 1])
+            )
 
-        return (False, -1, -1, "")
+        surrounding_symbols.append((False, -1, -1, ""))
+        return surrounding_symbols
 
     surrounded_nums = []
     valid_nums = []
@@ -71,17 +90,17 @@ def sum_complete_part_numbers(lines):
                     number_str += lines[line][column]
                     column += 1
 
-                    found_gear_for_number = False
                     for i in range(column - len(number_str), column):
                         adj_value = is_adjacent_to_symbol(i, line)
-                        if adj_value[0] and not found_gear_for_number:
-                            surrounded_nums.append(
-                                [number_str, adj_value[1], adj_value[2], adj_value[3]]
-                            )
-                            found_gear_for_number = True
+                        if any(i[0] for i in adj_value):
+                            for i in adj_value:
+                                if i[0]:
+                                    surrounded_nums.append(
+                                        [number_str, i[1], i[2], i[3]]
+                                    )
 
                 if any(
-                    is_adjacent_to_symbol(column, line)[0]
+                    any(i[0] for i in is_adjacent_to_symbol(column, line))
                     for column in range(column - len(number_str), column)
                 ):
                     valid_nums.append(number_str)
@@ -101,9 +120,16 @@ def sum_complete_part_numbers(lines):
         else:
             gear_groups[str(num[1]) + "," + str(num[2])] = [num[0]]
 
+    multiplied_numbers = []
+
     for cell in gear_groups:
         if len(gear_groups[cell]) == 2:
+            multiplied_numbers.append(int(gear_groups[cell][0]))
+            multiplied_numbers.append(int(gear_groups[cell][1]))
             gear_sum += int(gear_groups[cell][0]) * int(gear_groups[cell][1])
+
+    for i in sorted(multiplied_numbers):
+        print(i)
 
     return total_sum, gear_sum
 
