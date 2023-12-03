@@ -13,10 +13,7 @@ public class Day1 {
 
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
-            // line = line.replaceAll("[^0-9]", "");
-
-            int intLine = Integer.parseInt(line);
-            System.out.println(intLine);
+            line = line.replaceAll("[^0-9]", "");
 
             String first = line.substring(0, 1);
             String last = line.substring(line.length() - 1);
