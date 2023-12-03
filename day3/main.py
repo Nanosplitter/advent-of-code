@@ -14,39 +14,39 @@ def sum_complete_part_numbers(lines):
     def is_adjacent_to_symbol(column, line):
         # check upper left
         if column > 0 and line > 0 and lines[line - 1][column - 1] not in non_symbols:
-            return True
+            return (True, column - 1, line - 1, lines[line - 1][column - 1])
 
         # check up
         if line > 0 and lines[line - 1][column] not in non_symbols:
-            return True
+            return (True, column, line - 1, lines[line - 1][column])
 
         # check upper right
         if column < len(lines[line]) - 1 and line > 0 and lines[line - 1][column + 1] not in non_symbols:
-            return True
+            return (True, column + 1, line - 1, lines[line - 1][column + 1])
 
         # check left
         if column > 0 and lines[line][column - 1] not in non_symbols:
-            return True
+            return (True, column - 1, line, lines[line][column - 1])
 
         # check right
         if column < len(lines[line]) - 1 and lines[line][column + 1] not in non_symbols:
-            return True
+            return (True, column + 1, line, lines[line][column + 1])
 
         # check lower left
         if column > 0 and line < len(lines) - 1 and lines[line + 1][column - 1] not in non_symbols:
-            return True
+            return (True, column - 1, line + 1, lines[line + 1][column - 1])
 
         # check down
         if line < len(lines) - 1 and lines[line + 1][column] not in non_symbols:
-            return True
+            return (True, column, line + 1, lines[line + 1][column])
 
         # check lower right
         if column < len(lines[line]) - 1 and line < len(lines) - 1 and lines[line + 1][column + 1] not in non_symbols:
-            return True
+            return (True, column + 1, line + 1, lines[line + 1][column + 1])
 
         return False
         
-
+        
     for line in range(len(lines)):
         column = 0
         while column < len(lines[line]):
