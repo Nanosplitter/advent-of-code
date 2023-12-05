@@ -27,11 +27,8 @@ for line in lines:
 
 ending_cards = [1] * len(cards)
 
-total = 0
-
 for card in cards:
     for i in range(card.id + 1, card.id + card.get_num_winning_nums() + 1):
         ending_cards[i] += ending_cards[card.id]
 
 print(sum(ending_cards))
-    
