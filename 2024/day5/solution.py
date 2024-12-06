@@ -38,7 +38,5 @@ with open("input.txt") as f:
         else:
             updates.append(line.split(","))
             
-    
-    
     print(part1(rules, updates))
     print(part2(rules, updates))
