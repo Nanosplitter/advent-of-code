@@ -4,7 +4,6 @@ def part1(rules, updates):
 def follows_rules(rules, update):
     return not any([rule[0] in update and rule[1] in update and update.index(rule[0]) > update.index(rule[1]) for rule in rules])
 
-
 def part2(rules, updates):
     total = 0
     for update in updates:
@@ -13,18 +12,13 @@ def part2(rules, updates):
         
         while not follows_rules(rules, update):
             for rule in rules:
-                if rule[0] in update and rule[1] in update:
-                    rule_0_index = update.index(rule[0])
-                    rule_1_index = update.index(rule[1])
-                    if rule_0_index > rule_1_index:
-                        update[rule_0_index], update[rule_1_index] = update[rule_1_index], update[rule_0_index]
+                if rule[0] in update and rule[1] in update and update.index(rule[0]) > update.index(rule[1]):
+                    r0i, r1i = update.index(rule[0]), update.index(rule[1])
+                    update[r0i], update[r1i] = update[r1i], update[r0i]
             
         total += int(update[len(update)//2])
     
     return total
-
-
-
 
 with open("input.txt") as f:
     instructions = f.readlines()
