@@ -81,14 +81,7 @@ class Node:
             if self.friends[DOWN] is None and self.friends[RIGHT] is None:
                 corners += 1
 
-        #print(f"Node({self.row}, {self.col}, {self.value}) | corners: {corners}")
         return corners
-    
-    def __str__(self):
-        return f"Node({self.row}, {self.col}, {self.value})"
-    
-    def __repr__(self):
-        return self.__str__()
     
     def __eq__(self, other):
         if other is None:
@@ -101,12 +94,6 @@ class Node:
 class Region:
     def __init__(self):
         self.nodes = set()
-    
-    def __str__(self):
-        return f"Region({self.get_area()}, {self.get_perimeter()}, {self.get_price()})"
-    
-    def __repr__(self):
-        return self.__str__()
 
     def get_perimeter(self):
         perimeter = 0
@@ -132,12 +119,9 @@ class Region:
 
 
 def get_region(row, col, grid, region):
-    #print(f"Checking {row}, {col} | current perimeter: {region.perimeter} | current area: {region.area}")
-    
     node = Node(row, col, grid[row][col])
     
     if node in region.nodes:
-        #print(f"Already checked {node}")
         return region
     
     region.nodes.add(node)
@@ -154,8 +138,6 @@ def get_region(row, col, grid, region):
 
 
 def part1(grid) -> int:
-    #print(get_region(0, 0, grid))
-    
     all_nodes = []
     regions = []
     for row in range(len(grid)):
