@@ -38,37 +38,51 @@ class Node:
         return friends
     
     def get_num_corners(self):
-        # no friends means 4 corners
-        
         corners = 0
-        
+
         if self.get_num_friends() == 0:
             return 4
-        
+
         if (self.friends[UP] and self.friends[DOWN]) and (self.friends[LEFT] is None and self.friends[RIGHT] is None):
             return 0
-        
+
         if self.friends[LEFT] and self.friends[RIGHT] and (self.friends[UP] is None and self.friends[DOWN] is None):
             return 0
+
+        if self.friends[UP_LEFT] is None:
+            if (self.friends[UP] is None and self.friends[LEFT] is None) or (self.friends[UP] is not None and self.friends[LEFT] is not None):
+                corners += 1
+
+        if self.friends[UP_RIGHT] is None:
+            if (self.friends[UP] is None and self.friends[RIGHT] is None) or (self.friends[UP] is not None and self.friends[RIGHT] is not None):
+                corners += 1
+
+        if self.friends[DOWN_LEFT] is None:
+            if (self.friends[DOWN] is None and self.friends[LEFT] is None) or (self.friends[DOWN] is not None and self.friends[LEFT] is not None):
+                corners += 1
+
+        if self.friends[DOWN_RIGHT] is None:
+            if (self.friends[DOWN] is None and self.friends[RIGHT] is None) or (self.friends[DOWN] is not None and self.friends[RIGHT] is not None):
+                corners += 1
         
-        if self.friends[UP] and self.friends[LEFT]:
-            corners += self.friends[UP_LEFT] is None
+        if self.friends[UP_LEFT]:
+            if self.friends[UP] is None and self.friends[LEFT] is None:
+                corners += 1
         
-        if self.friends[UP] and self.friends[RIGHT]:
-            corners += self.friends[UP_RIGHT] is None
-            
-        if self.friends[DOWN] and self.friends[LEFT]:
-            corners += self.friends[DOWN_LEFT] is None
-            
-        if self.friends[DOWN] and self.friends[RIGHT]:
-            corners += self.friends[DOWN_RIGHT] is None
-            
+        if self.friends[UP_RIGHT]:
+            if self.friends[UP] is None and self.friends[RIGHT] is None:
+                corners += 1
+                
+        if self.friends[DOWN_LEFT]:
+            if self.friends[DOWN] is None and self.friends[LEFT] is None:
+                corners += 1
+                
+        if self.friends[DOWN_RIGHT]:
+            if self.friends[DOWN] is None and self.friends[RIGHT] is None:
+                corners += 1
+
+        #print(f"Node({self.row}, {self.col}, {self.value}) | corners: {corners}")
         return corners
-        
-        
-        
-        
-        
     
     def __str__(self):
         return f"Node({self.row}, {self.col}, {self.value})"
@@ -77,6 +91,8 @@ class Node:
         return self.__str__()
     
     def __eq__(self, other):
+        if other is None:
+            return False
         return self.row == other.row and self.col == other.col and self.value == other.value
     
     def __hash__(self):
@@ -87,7 +103,7 @@ class Region:
         self.nodes = set()
     
     def __str__(self):
-        return f"Region({self.nodes}, {self.get_area()}, {self.get_perimeter()}, {self.get_price()})"
+        return f"Region({self.get_area()}, {self.get_perimeter()}, {self.get_price()})"
     
     def __repr__(self):
         return self.__str__()
@@ -110,6 +126,9 @@ class Region:
         for node in self.nodes:
             corners += node.get_num_corners()
         return corners
+    
+    def get_bulk_price(self):
+        return self.get_area() * self.get_corners()
 
 
 def get_region(row, col, grid, region):
@@ -129,7 +148,8 @@ def get_region(row, col, grid, region):
         if 0 <= check_row < len(grid) and 0 <= check_col < len(grid[0]):
             if grid[check_row][check_col] == grid[row][col] and (check_row, check_col) not in region.nodes:
                 node.add_friend(Node(check_row, check_col, grid[check_row][check_col]), direction)
-                get_region(check_row, check_col, grid, region)
+                if direction in MANHATTAN_DIRS:
+                    get_region(check_row, check_col, grid, region)
     return region
 
 
@@ -164,12 +184,14 @@ def part2(grid) -> int:
                 regions.append(region)
                 all_nodes += list(region.nodes)
     
+    total_price = 0
     for region in regions:
-        print(region, "| corners:", region.get_corners())
-    return 0
+        total_price += region.get_bulk_price()
+    
+    return total_price
 
-with open("2024/day12/simple_input.txt") as f:
+with open("2024/day12/ex_input.txt") as f:
     instructions = [line.strip() for line in f.readlines()]
 
-    #print(part1(instructions))
+    print(part1(instructions))
     print(part2(instructions))
