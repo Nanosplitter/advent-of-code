@@ -136,8 +136,7 @@ def get_region(row, col, grid, region):
                     get_region(check_row, check_col, grid, region)
     return region
 
-
-def part1(grid) -> int:
+def get_price(grid, bulk):
     all_nodes = []
     regions = []
     for row in range(len(grid)):
@@ -151,26 +150,18 @@ def part1(grid) -> int:
     
     total_price = 0
     for region in regions:
-        total_price += region.get_price()
+        if bulk:
+            total_price += region.get_bulk_price()
+        else:
+            total_price += region.get_price()
     
     return total_price
 
+def part1(grid) -> int:
+    return get_price(grid, bulk=False)
+
 def part2(grid) -> int:
-    all_nodes = []
-    regions = []
-    for row in range(len(grid)):
-        for col in range(len(grid[0])):
-            if Node(row, col, grid[row][col]) not in all_nodes:
-                region = Region()
-                get_region(row, col, grid, region)
-                regions.append(region)
-                all_nodes += list(region.nodes)
-    
-    total_price = 0
-    for region in regions:
-        total_price += region.get_bulk_price()
-    
-    return total_price
+    return get_price(grid, bulk=True)
 
 with open("2024/day12/ex_input.txt") as f:
     instructions = [line.strip() for line in f.readlines()]
