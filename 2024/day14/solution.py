@@ -12,18 +12,11 @@ class Robot:
     def move(self):
         self.position[0] += self.velocity[0]
         self.position[1] += self.velocity[1]
-        
-        # if the robot is out of bounds, wrap it around
+
         if self.position[0] < 0 or self.position[0] >= self.board_width:
             self.position[0] = self.position[0] % self.board_width
         if self.position[1] < 0 or self.position[1] >= self.board_height:
             self.position[1] = self.position[1] % self.board_height
-    
-    def __str__(self):
-        return f"Robot ({self.position[0]}, {self.position[1]}) with velocity ({self.velocity[0]}, {self.velocity[1]})"
-    
-    def __repr__(self):
-        return self.__str__()
 
 class Board:
     def __init__(self, width, height, robots=[]):
@@ -39,11 +32,11 @@ class Board:
         self.robots.append(Robot(position, velocity, self.width, self.height))
         
     def get_robots_in_all_quadrants(self):
-        # get the robots in each quadrant, ignoring robots in the middle
         quadrants = [[], [], [], []]
         for robot in self.robots:
             if robot.position[0] == self.width // 2 or robot.position[1] == self.height // 2:
-                continue  # ignore robots in the middle
+                continue
+            
             if robot.position[0] < self.width / 2 and robot.position[1] < self.height / 2:
                 quadrants[0].append(robot)
             elif robot.position[0] >= self.width / 2 and robot.position[1] < self.height / 2:
@@ -71,7 +64,6 @@ class Board:
         
     
     def __str__(self):
-        # print the board with . for empty spaces and # for robots
         board = [[0 for _ in range(self.width)] for _ in range(self.height)]
         for robot in self.robots:
             board[robot.position[1]][robot.position[0]] = "#"
