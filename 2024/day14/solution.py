@@ -84,12 +84,11 @@ def part1(board) -> int:
     return reduce(mul, quadrants, 1)
 
 def part2(board) -> int:
-    with open(f"board.txt", "w") as f:
-        for i in range(10):
-            board.move()
-            f.write("state " + str(i) + "\n")
-            f.write(str(board))
-            f.write("\n")
+    for i in range(10000):
+        board.move()
+        if "############################" in str(board):
+            print(str(board))
+            return i + 1
 
 if len(sys.argv) < 2:
     print("Usage: python solution.py <input_file>")
