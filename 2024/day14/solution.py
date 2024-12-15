@@ -2,6 +2,8 @@ import sys
 from functools import reduce
 from operator import mul
 
+import time
+
 class Robot:
     def __init__(self, position, velocity, board_width, board_height):
         self.position = position
@@ -69,7 +71,7 @@ class Board:
             board[robot.position[1]][robot.position[0]] = "#"
                 
             
-        return "\n".join(["".join([str(cell) if cell != 0 else "." for cell in row]) for row in board])
+        return "\n".join(["".join([str(cell) if cell != 0 else " " for cell in row]) for row in board])
     
     def __repr__(self):
         return self.__str__()
@@ -86,6 +88,9 @@ def part1(board) -> int:
 def part2(board) -> int:
     for i in range(10000):
         board.move()
+        print("===============")
+        print(board)
+        #time.sleep(0.01)
         if "############################" in str(board):
             print(str(board))
             return i + 1

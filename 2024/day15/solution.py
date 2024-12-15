@@ -1,6 +1,7 @@
 from collections import defaultdict
 from itertools import groupby
 import sys
+import time
 
 UP = (-1, 0)
 DOWN = (1, 0)
@@ -108,7 +109,21 @@ class Board:
         for row in range(self.height):
             for col in range(self.width):
                 node = self.nodes[(row, col)]
-                res += node.symbol if node is not None else "."
+                if node is not None:
+                    if node.symbol == "@":
+                        res += "\033[92m@\033[0m"  # Red
+                    elif node.symbol == "O":
+                        res += "\033[92mO\033[0m"  # Green
+                    elif node.symbol == "#":
+                        res += "#"  # Yellow
+                    elif node.symbol == "[":
+                        res += "\033[93m[\033[0m"  # Blue
+                    elif node.symbol == "]":
+                        res += "\033[93m]\033[0m"  # Magenta
+                    else:
+                        res += node.symbol
+                else:
+                    res += " "
             res += "\n"
         return res
     
@@ -195,6 +210,9 @@ def part2(instructions) -> int:
         move = moves[i]
         direction = DIRS_MAP[move]
         board.attempt_move(direction)
+        
+        print(board)
+        time.sleep(0.01)
 
     gps_total = 0
     
