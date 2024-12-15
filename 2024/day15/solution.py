@@ -27,6 +27,9 @@ class Node:
     def __repr__(self):
         return self.__str__()
     
+    def __hash__(self):
+        return hash(self.position)
+    
     def add_partner(self, partner):
         self.partner = partner
         
@@ -39,41 +42,40 @@ class Node:
         
         return False
     
-    def attempt_move(self, direction, board, called_from_partner=False):
+    def attempt_move(self, direction, board, moving_nodes, called_from_partner=False):
         if not self.is_moveable:
+            moving_nodes.clear()
             return False
+        
         
         check_position = (self.position[0] + direction[0], self.position[1] + direction[1])
         check_node = board.nodes[check_position]
         
-        print("------------------------------")
-        print(f"Checking {self.symbol} at {self.position} moving to {check_position}...")
-        print(f"Check node: {check_node}")
-        print(f"Called from partner: {called_from_partner}")
+        partner_can_move = True
+        
+        if direction in [UP, DOWN] and self.partner is not None:
+            if not called_from_partner:
+                partner_can_move = self.partner.attempt_move(direction, board, moving_nodes, True)
+                
+                if not partner_can_move:
+                    moving_nodes.clear()
+                    return False
+        
+        if check_node is None:
+            moving_nodes.append((self, check_position))
+            return True
         
         if check_node is not None and not check_node.is_moveable:
-            #print("Node is not moveable")
+            moving_nodes.clear()
+            return False
+
+        if not partner_can_move:
+            moving_nodes.clear()
             return False
         
-        if direction in [UP, DOWN] and self.partner is not None and not called_from_partner:
-            if (check_node is None or board.nodes[check_position].attempt_move(direction, board)) and self.partner.attempt_move(direction, board, called_from_partner=True):
-                board.update_node(self.position, None)
-                board.update_node(check_position, self)
-                self.position = check_position
-                return True
-            else:
-                return False
-        
-       
-        if check_node is None or board.nodes[check_position].attempt_move(direction, board):
-            board.update_node(self.position, None)
-            board.update_node(check_position, self)
-            self.position = check_position
-            return True
-                
-            
-        
-        return False
+        moving_nodes.append((self, check_position))
+        return check_node.attempt_move(direction, board, moving_nodes, False) and partner_can_move
+    
 class Board:
     def __init__(self, width, height):
         self.width = width
@@ -91,7 +93,15 @@ class Board:
         self.nodes[position] = node
     
     def attempt_move(self, direction):
-        self.robot.attempt_move(direction, self)
+        moving_nodes = [(self.robot, (self.robot.position[0] + direction[0], self.robot.position[1] + direction[1]))]
+        self.robot.attempt_move(direction, self, moving_nodes, False)
+        
+        for node_instructions in moving_nodes[::-1]:
+            new_position = node_instructions[1]
+            node = node_instructions[0]
+            self.update_node(node.position, None)
+            node.position = new_position
+            self.update_node(new_position, node)
         
     def __str__(self):
         res = ""
@@ -100,29 +110,23 @@ class Board:
                 node = self.nodes[(row, col)]
                 res += node.symbol if node is not None else "."
             res += "\n"
-            
         return res
     
     def __repr__(self):
         return self.__str__()
     
 def part1(instructions) -> int:
-    #print(instructions)
     instructions = [list(group) for k, group in groupby(instructions, lambda x: x.strip() == "") if not k]
     
     moves_lines = instructions[1]
     
     board = Board(len(instructions[0][0].strip()), len(instructions[0]))
     
-    
-    
     for row, line in enumerate(instructions[0]):
-        #print(line.strip())
         if line.strip() == "":
             break
         
         for col, symbol in enumerate(line.strip()):
-            #print(row, col, symbol)
             robot = False
             can_move = False
             
@@ -137,18 +141,11 @@ def part1(instructions) -> int:
     
     for line in moves_lines:
         moves.extend(line.strip())
-    
-    print(board)
-    #print(board.nodes)
-        
-    #print("Initial board:")
-    #print(board)
+
     for i in range(len(moves)):
         move = moves[i]
         direction = DIRS_MAP[move]
         board.attempt_move(direction)
-        #print(f"Board after move {i + 1}:")
-        #print(board)
     
     gps_total = 0
     
@@ -164,8 +161,6 @@ def part2(instructions) -> int:
     moves_lines = instructions[1]
     
     board = Board(len(instructions[0][0].strip()) * 2, len(instructions[0]))
-    
-    
     
     for row, line in enumerate(instructions[0]):
         if line.strip() == "":
@@ -191,9 +186,6 @@ def part2(instructions) -> int:
                     
                 board.add_node(node, robot)
     
-    #print(board)
-                
-    
     moves = []
     
     for line in moves_lines:
@@ -203,14 +195,7 @@ def part2(instructions) -> int:
         move = moves[i]
         direction = DIRS_MAP[move]
         board.attempt_move(direction)
-        print(f"Board after move {i + 1}:")
-        with open("board_output.txt", "a") as f:
-            f.write(f"Board after move {i + 1} {move}:\n")
-            f.write(str(board))
-            f.write("\n")
-        print(board)
-    
-    print(board)
+
     gps_total = 0
     
     for node in board.nodes.values():
@@ -220,7 +205,6 @@ def part2(instructions) -> int:
     return gps_total
 
 if len(sys.argv) < 2:
-    print("Usage: python solution.py <input_file>")
     sys.exit(1)
 
 input_file = sys.argv[1]
