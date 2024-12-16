@@ -2,6 +2,7 @@ from collections import defaultdict
 from itertools import groupby
 import sys
 import time
+import os
 
 UP = (-1, 0)
 DOWN = (1, 0)
@@ -211,8 +212,11 @@ def part2(instructions) -> int:
         direction = DIRS_MAP[move]
         board.attempt_move(direction)
         
+        os.system('cls||clear')
+        #print(chr(27) + "[2J")
+        #print('\033[4A\033[2K', end='')
         print(board)
-        time.sleep(0.01)
+        time.sleep(0.05)
 
     gps_total = 0
     
