@@ -55,10 +55,6 @@ class Board:
     
     def set_end_position(self, position):
         self.end_position = position
-    
-    def find_shortest_path(self):
-        cost, path, num_straights, num_turns = find_shortest_path(self)
-        return cost, path, num_straights, num_turns
         
     def __str__(self):
         res = ""
