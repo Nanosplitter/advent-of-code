@@ -1,9 +1,12 @@
 from collections import defaultdict
+from functools import cache
 from itertools import groupby
 import sys
 import time
 import os
 from turtle import st
+
+sys.setrecursionlimit(2000)
 
 UP = (-1, 0)
 DOWN = (1, 0)
@@ -18,6 +21,7 @@ class Node:
         self.position = position
         self.symbol = symbol
         
+    @cache
     def find_neighbors(self, board):
         neighbors = {UP: None, DOWN: None, LEFT: None, RIGHT: None}
         
@@ -99,10 +103,15 @@ class Board:
     def __repr__(self):
         return self.__str__()
 
-def find_shortest_path(board, start_position, end_position, curr_direction, visited=None):
-    #print(start_position, end_position, curr_direction)
+
+def find_shortest_path(board, start_position, end_position, curr_direction, visited=None, memo=None):
     if visited is None:
         visited = set()
+    if memo is None:
+        memo = {}
+    key = (start_position, curr_direction)
+    if key in memo:
+        return memo[key]
     if start_position in visited:
         return 1000000000, [], 0, 0  # Return cost, path, straights, turns
     if start_position == end_position:
@@ -114,13 +123,12 @@ def find_shortest_path(board, start_position, end_position, curr_direction, visi
     best_path = []
     best_straights = 0
     best_turns = 0
-    for dir in neighbors:
-        neighbor = neighbors[dir]
+    for dir, neighbor in neighbors.items():
         if neighbor is None:
             continue
         cost = 1 if dir == curr_direction else 1001
         total_cost, path, num_straights, num_turns = find_shortest_path(
-            board, neighbor.position, end_position, dir, visited.copy()
+            board, neighbor.position, end_position, dir, visited, memo
         )
         total_cost += cost
         if dir == curr_direction:
@@ -133,7 +141,9 @@ def find_shortest_path(board, start_position, end_position, curr_direction, visi
             best_path = [start_position] + path
             best_straights = num_straights
             best_turns = num_turns
-    return best_cost, best_path, best_straights, best_turns
+    visited.remove(start_position)
+    memo[key] = (best_cost, best_path, best_straights, best_turns)
+    return memo[key]
         
     
 def part1(instructions) -> int:
@@ -166,6 +176,8 @@ input_file = sys.argv[1]
 
 with open(input_file) as f:
     instructions = [line.strip() for line in f.readlines()]
+    
+    sys.setrecursionlimit(1000000)
 
     print(part1(instructions))
     #print(part2(instructions))
