@@ -5,6 +5,7 @@ import sys
 import time
 import os
 from turtle import st
+import heapq
 
 sys.setrecursionlimit(2000)
 
@@ -65,12 +66,7 @@ class Board:
         self.end_position = position
     
     def find_shortest_path(self):
-        cost, path, num_straights, num_turns = find_shortest_path(self, self.start_position, self.end_position, RIGHT)
-        
-        for position in path:
-            node = self.nodes[position]
-            node.symbol = "*"
-        print(self)
+        cost, path, num_straights, num_turns = find_shortest_path(self)
         return cost, path, num_straights, num_turns
         
     def __str__(self):
@@ -104,48 +100,109 @@ class Board:
         return self.__str__()
 
 
-def find_shortest_path(board, start_position, end_position, curr_direction, visited=None, memo=None):
-    if visited is None:
-        visited = set()
-    if memo is None:
-        memo = {}
-    key = (start_position, curr_direction)
-    if key in memo:
-        return memo[key]
-    if start_position in visited:
-        return 1000000000, [], 0, 0  # Return cost, path, straights, turns
-    if start_position == end_position:
-        return 0, [start_position], 0, 0  # Return cost, path, straights, turns
-    visited.add(start_position)
-    curr_node = board.nodes[start_position]
-    neighbors = curr_node.find_neighbors(board)
-    best_cost = 1000000000
-    best_path = []
-    best_straights = 0
-    best_turns = 0
-    for dir, neighbor in neighbors.items():
-        if neighbor is None:
+def find_shortest_path(board):
+    start = board.start_position
+    end = board.end_position
+    queue = []
+    heapq.heappush(queue, (0, start, RIGHT, 0, 0))
+    visited = {}
+
+    while queue:
+        cost, position, curr_direction, num_straights, num_turns = heapq.heappop(queue)
+
+        if position == end:
+            return cost, [], num_straights, num_turns
+
+        if (position, curr_direction) in visited and visited[(position, curr_direction)] <= cost:
             continue
-        cost = 1 if dir == curr_direction else 1001
-        total_cost, path, num_straights, num_turns = find_shortest_path(
-            board, neighbor.position, end_position, dir, visited, memo
-        )
-        total_cost += cost
-        if dir == curr_direction:
-            num_straights += 1
-        else:
-            num_turns += 1
-            num_straights += 1
-        if total_cost < best_cost:
-            best_cost = total_cost
-            best_path = [start_position] + path
-            best_straights = num_straights
-            best_turns = num_turns
-    visited.remove(start_position)
-    memo[key] = (best_cost, best_path, best_straights, best_turns)
-    return memo[key]
-        
-    
+        visited[(position, curr_direction)] = cost
+
+        curr_node = board.nodes[position]
+        neighbors = curr_node.find_neighbors(board)
+
+        for dir, neighbor in neighbors.items():
+            if neighbor is None:
+                continue
+            turn_cost = 1 if curr_direction == dir or curr_direction is None else 1001
+            new_cost = cost + turn_cost
+            new_num_straights = num_straights + 1 if curr_direction == dir or curr_direction is None else num_straights
+            new_num_turns = num_turns if curr_direction == dir or curr_direction is None else num_turns + 1
+            heapq.heappush(queue, (new_cost, neighbor.position, dir, new_num_straights, new_num_turns))
+
+    return 1000000000, [], 0, 0
+
+
+def find_shortest_paths(board):
+    start = board.start_position
+    end = board.end_position
+    initial_direction = RIGHT
+    queue = []
+    heapq.heappush(queue, (0, start, initial_direction))
+    visited = {}
+    parent_nodes = defaultdict(set)
+    min_cost_per_node = defaultdict(lambda: float('inf'))
+    min_cost = None
+
+    while queue:
+        cost, position, curr_direction = heapq.heappop(queue)
+
+        if min_cost is not None and cost > min_cost:
+            break
+
+        if position == end:
+            if min_cost is None:
+                min_cost = cost
+            continue
+
+        if (position, curr_direction) in visited and visited[(position, curr_direction)] <= cost:
+            continue
+
+        visited[(position, curr_direction)] = cost
+
+        curr_node = board.nodes[position]
+        neighbors = curr_node.find_neighbors(board)
+
+        for dir, neighbor in neighbors.items():
+            if neighbor is None:
+                continue
+
+            turn_cost = 1 if curr_direction == dir else 1001
+            new_cost = cost + turn_cost
+
+            neighbor_pos = neighbor.position
+            neighbor_dir = dir
+
+            if new_cost < min_cost_per_node[(neighbor_pos, neighbor_dir)]:
+                parent_nodes[(neighbor_pos, neighbor_dir)] = {(position, curr_direction)}
+                min_cost_per_node[(neighbor_pos, neighbor_dir)] = new_cost
+                heapq.heappush(queue, (new_cost, neighbor_pos, neighbor_dir))
+            elif new_cost == min_cost_per_node[(neighbor_pos, neighbor_dir)]:
+                parent_nodes[(neighbor_pos, neighbor_dir)].add((position, curr_direction))
+                heapq.heappush(queue, (new_cost, neighbor_pos, neighbor_dir))
+
+    end_directions = [
+        (end, dir) for dir in [UP, DOWN, LEFT, RIGHT]
+        if min_cost_per_node[(end, dir)] == min_cost
+    ]
+
+    if not end_directions:
+        return float('inf'), set()
+
+    nodes_in_best_paths = set()
+    processed = set()
+    stack = end_directions.copy()
+
+    while stack:
+        current_pos, current_dir = stack.pop()
+        if (current_pos, current_dir) in processed:
+            continue
+        processed.add((current_pos, current_dir))
+        nodes_in_best_paths.add(current_pos)
+        for parent_pos, parent_dir in parent_nodes[(current_pos, current_dir)]:
+            stack.append((parent_pos, parent_dir))
+
+    return min_cost, nodes_in_best_paths
+
 def part1(instructions) -> int:
     board = Board(len(instructions[0]), len(instructions))
     
@@ -166,7 +223,24 @@ def part1(instructions) -> int:
     
 
 def part2(instructions) -> int:
-    return 0
+    board = Board(len(instructions[0]), len(instructions))
+    for row in range(len(instructions)):
+        for col in range(len(instructions[row])):
+            board.set_node(Node((row, col), instructions[row][col]))
+            if instructions[row][col] == "S":
+                board.set_start_position((row, col))
+            elif instructions[row][col] == "E":
+                board.set_end_position((row, col))
+    min_cost, nodes_in_best_paths = find_shortest_paths(board)
+    print(f"Minimum Cost: {min_cost}")
+    for row in range(board.height):
+        for col in range(board.width):
+            if (row, col) in nodes_in_best_paths:
+                node = board.nodes[(row, col)]
+                if node.symbol == ".":
+                    node.symbol = "*"
+    print(board)
+    return len(nodes_in_best_paths)
     
 
 if len(sys.argv) < 2:
@@ -180,4 +254,4 @@ with open(input_file) as f:
     sys.setrecursionlimit(1000000)
 
     print(part1(instructions))
-    #print(part2(instructions))
+    print(part2(instructions))
