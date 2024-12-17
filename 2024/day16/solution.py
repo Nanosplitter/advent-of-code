@@ -3,6 +3,7 @@ from itertools import groupby
 import sys
 import time
 import os
+from turtle import st
 
 UP = (-1, 0)
 DOWN = (1, 0)
@@ -60,24 +61,13 @@ class Board:
         self.end_position = position
     
     def find_shortest_path(self):
-        cost_up, path_up = find_shortest_path(self, self.start_position, self.end_position, UP)
-        cost_right, path_right = find_shortest_path(self, self.start_position, self.end_position, RIGHT)
-        
-        print(f"Cost up: {cost_up}, path: {path_up}")
-        print(f"Cost right: {cost_right}, path: {path_right}")
-        
-        if cost_up < cost_right:
-            cost = cost_up
-            path = path_up
-        else:
-            cost = cost_right
-            path = path_right
+        cost, path, num_straights, num_turns = find_shortest_path(self, self.start_position, self.end_position, RIGHT)
         
         for position in path:
             node = self.nodes[position]
             node.symbol = "*"
         print(self)
-        return cost
+        return cost, path, num_straights, num_turns
         
     def __str__(self):
         res = ""
@@ -110,30 +100,40 @@ class Board:
         return self.__str__()
 
 def find_shortest_path(board, start_position, end_position, curr_direction, visited=None):
+    #print(start_position, end_position, curr_direction)
     if visited is None:
         visited = set()
     if start_position in visited:
-        return 1000000000, []
+        return 1000000000, [], 0, 0  # Return cost, path, straights, turns
     if start_position == end_position:
-        return 0, [start_position]
+        return 0, [start_position], 0, 0  # Return cost, path, straights, turns
     visited.add(start_position)
     curr_node = board.nodes[start_position]
     neighbors = curr_node.find_neighbors(board)
     best_cost = 1000000000
     best_path = []
+    best_straights = 0
+    best_turns = 0
     for dir in neighbors:
         neighbor = neighbors[dir]
         if neighbor is None:
             continue
         cost = 1 if dir == curr_direction else 1001
-        total_cost, path = find_shortest_path(
+        total_cost, path, num_straights, num_turns = find_shortest_path(
             board, neighbor.position, end_position, dir, visited.copy()
         )
         total_cost += cost
+        if dir == curr_direction:
+            num_straights += 1
+        else:
+            num_turns += 1
+            num_straights += 1
         if total_cost < best_cost:
             best_cost = total_cost
             best_path = [start_position] + path
-    return best_cost, best_path
+            best_straights = num_straights
+            best_turns = num_turns
+    return best_cost, best_path, best_straights, best_turns
         
     
 def part1(instructions) -> int:
@@ -149,7 +149,10 @@ def part1(instructions) -> int:
                 board.set_end_position((row, col))
     
     print(board)
-    return board.find_shortest_path()
+    cost, path, num_straights, num_turns = board.find_shortest_path()
+    print(f"Number of straights: {num_straights}")
+    print(f"Number of turns: {num_turns}")
+    return cost
     
 
 def part2(instructions) -> int:
