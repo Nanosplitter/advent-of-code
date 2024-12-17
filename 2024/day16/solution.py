@@ -1,9 +1,6 @@
 from collections import defaultdict
 import sys
-from turtle import st
 import heapq
-
-sys.setrecursionlimit(2000)
 
 UP = (-1, 0)
 DOWN = (1, 0)
