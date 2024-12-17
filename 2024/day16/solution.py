@@ -1,9 +1,5 @@
 from collections import defaultdict
-from functools import cache
-from itertools import groupby
 import sys
-import time
-import os
 from turtle import st
 import heapq
 
@@ -22,7 +18,6 @@ class Node:
         self.position = position
         self.symbol = symbol
         
-    @cache
     def find_neighbors(self, board):
         neighbors = {UP: None, DOWN: None, LEFT: None, RIGHT: None}
         
@@ -35,7 +30,6 @@ class Node:
         
         return neighbors
         
-    
     def __str__(self):
         return f"Node({self.symbol}, {self.position})"
     
@@ -86,7 +80,7 @@ class Board:
                     elif node.symbol == "]":
                         res += "\033[93m]\033[0m"  # Magenta
                     elif node.symbol == "*":
-                        res += "\033[95m*\033[0m"
+                        res += "\033[93m*\033[0m"
                     elif node.symbol == ".":
                         res += " "
                     else:
@@ -101,11 +95,9 @@ class Board:
 
 
 def find_shortest_paths(board):
-    start = board.start_position
     end = board.end_position
-    initial_direction = RIGHT
     queue = []
-    heapq.heappush(queue, (0, start, initial_direction))
+    heapq.heappush(queue, (0, board.start_position, RIGHT))
     visited = {}
     parent_nodes = defaultdict(set)
     min_cost_per_node = defaultdict(lambda: float('inf'))
@@ -144,6 +136,7 @@ def find_shortest_paths(board):
                 parent_nodes[(neighbor_pos, neighbor_dir)] = {(position, curr_direction)}
                 min_cost_per_node[(neighbor_pos, neighbor_dir)] = new_cost
                 heapq.heappush(queue, (new_cost, neighbor_pos, neighbor_dir))
+                
             elif new_cost == min_cost_per_node[(neighbor_pos, neighbor_dir)]:
                 parent_nodes[(neighbor_pos, neighbor_dir)].add((position, curr_direction))
                 heapq.heappush(queue, (new_cost, neighbor_pos, neighbor_dir))
@@ -190,8 +183,9 @@ with open(input_file) as f:
                 board.set_start_position((row, col))
             elif instructions[row][col] == "E":
                 board.set_end_position((row, col))
+                
     min_cost, nodes_in_best_paths = find_shortest_paths(board)
-    print(f"Minimum Cost: {min_cost}")
+    
     for row in range(board.height):
         for col in range(board.width):
             if (row, col) in nodes_in_best_paths:
