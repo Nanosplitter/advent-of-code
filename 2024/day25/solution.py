@@ -1,13 +1,18 @@
-import numpy as np
-
+import sys
+    
 def part1(instructions) -> int:
     return 0
 
 def part2(instructions) -> int:
     return 0
 
-with open("input.txt") as f:
-    board = f.readlines()
+if len(sys.argv) < 2:
+    sys.exit(1)
 
-    print(part1(board))
-    print(part2(board))
+input_file = sys.argv[1]
+
+with open(input_file) as f:
+    instructions = f.readlines()
+
+    print(part1(instructions))
+    print(part2(instructions))
