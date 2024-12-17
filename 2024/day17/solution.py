@@ -107,7 +107,6 @@ def part2(program) -> int:
         a *= 8
         while True:
             if computer.run(program, a) == target:
-                print(a, computer.output)
                 break
             
             a += 1
