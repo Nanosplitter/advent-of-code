@@ -5,11 +5,11 @@ B = 'b'
 C = 'c'
 
 class Computer:
-    def __init__(self, a=0, b=0, c=0):
+    def __init__(self):
         self.registers = {
-            'a': a,
-            'b': b,
-            'c': c,
+            A: 0,
+            B: 0,
+            C: 0,
         }
         
         self.pointer = 0
@@ -24,8 +24,6 @@ class Computer:
             return self.registers['b']
         elif operand == 6:
             return self.registers['c']
-        else:
-            raise ValueError("Invalid combo operand")
     
     def adv(self, operand):
         operand = self.get_combo(operand)
@@ -43,12 +41,11 @@ class Computer:
         else:
             self.pointer += 2
 
-    def bxc(self, operand):
+    def bxc(self):
         self.registers[B] = self.registers[B] ^ self.registers[C]
 
     def out(self, operand):
-        value = self.get_combo(operand) % 8
-        self.output.append(value)
+        self.output.append(self.get_combo(operand) % 8)
 
     def bdv(self, operand):
         denominator = 2 ** self.get_combo(operand)
@@ -58,19 +55,19 @@ class Computer:
         denominator = 2 ** self.get_combo(operand)
         self.registers[C] = self.registers[A] // denominator
 
-    def run(self, program, a=None, opcodes=None):
+    def run(self, program, a=None):
         if a is not None:
             self.registers[A] = a
         self.registers[B] = 0
         self.registers[C] = 0
+        
         self.output = []
         self.pointer = 0
 
-        if opcodes is None:
-            opcodes = list(map(int, program.strip().split(',')))
-        while self.pointer < len(opcodes):
-            opcode = opcodes[self.pointer]
-            operand = opcodes[self.pointer + 1] if self.pointer + 1 < len(opcodes) else 0
+        while self.pointer < len(program):
+            opcode = program[self.pointer]
+            operand = program[self.pointer + 1]
+            
             self.execute(opcode, operand)
 
             if opcode != 3 or self.registers[A] == 0:
@@ -88,54 +85,43 @@ class Computer:
         elif opcode == 3:
             self.jnz(operand)
         elif opcode == 4:
-            self.bxc(operand)
+            self.bxc()
         elif opcode == 5:
             self.out(operand)
         elif opcode == 6:
             self.bdv(operand)
         elif opcode == 7:
             self.cdv(operand)
-        else:
-            raise ValueError("Unknown opcode")
 
-def part1(a, instructions) -> str:
-    computer = Computer(a)
-    computer.run(instructions)
-    return ','.join(map(str, computer.output))
-
-def part2(a, instructions) -> int:
-    pre_parsed_opcodes = list(map(int, instructions.split(',')))
-    test_instructions = pre_parsed_opcodes.copy()
-    
-    print(test_instructions)
-    
-    test_value = 0
-    
+def part1(a, program) -> str:
     computer = Computer()
     
-    
-    while computer.run(None, test_value, opcodes=pre_parsed_opcodes) != test_instructions:
-        #print(test_value)
-        test_value += 1
-    
-    return test_value
-    
-    
+    return ','.join(map(str, computer.run(program, a)))
 
-if len(sys.argv) < 2:
-    sys.exit(1)
+def part2(program) -> int:
+    computer = Computer()
+    a = 0
+    
+    for current_instruction in range(1, len(program) + 1):
+        target = program[len(program) - current_instruction:]
+        a *= 8
+        while True:
+            if computer.run(program, a) == target:
+                print(a, computer.output)
+                break
+            
+            a += 1
+            
+    return a
 
 input_file = sys.argv[1]
 
 with open(input_file) as f:
     lines = f.readlines()
+    
     a = int(lines[0].split(':')[1].strip())
-    program_line = next((line for line in lines if line.startswith('Program:')), None)
-    if program_line:
-        program = program_line.split(':')[1].strip()
-    else:
-        program = ''
+    program = list(map(int, lines[4].split(":")[1].strip().split(',')))
     
     print(part1(a, program))
-    print(part2(a, program))
+    print(part2(program))
 
