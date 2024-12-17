@@ -100,38 +100,6 @@ class Board:
         return self.__str__()
 
 
-def find_shortest_path(board):
-    start = board.start_position
-    end = board.end_position
-    queue = []
-    heapq.heappush(queue, (0, start, RIGHT, 0, 0))
-    visited = {}
-
-    while queue:
-        cost, position, curr_direction, num_straights, num_turns = heapq.heappop(queue)
-
-        if position == end:
-            return cost, [], num_straights, num_turns
-
-        if (position, curr_direction) in visited and visited[(position, curr_direction)] <= cost:
-            continue
-        visited[(position, curr_direction)] = cost
-
-        curr_node = board.nodes[position]
-        neighbors = curr_node.find_neighbors(board)
-
-        for dir, neighbor in neighbors.items():
-            if neighbor is None:
-                continue
-            turn_cost = 1 if curr_direction == dir or curr_direction is None else 1001
-            new_cost = cost + turn_cost
-            new_num_straights = num_straights + 1 if curr_direction == dir or curr_direction is None else num_straights
-            new_num_turns = num_turns if curr_direction == dir or curr_direction is None else num_turns + 1
-            heapq.heappush(queue, (new_cost, neighbor.position, dir, new_num_straights, new_num_turns))
-
-    return 1000000000, [], 0, 0
-
-
 def find_shortest_paths(board):
     start = board.start_position
     end = board.end_position
@@ -202,27 +170,18 @@ def find_shortest_paths(board):
             stack.append((parent_pos, parent_dir))
 
     return min_cost, nodes_in_best_paths
-
-def part1(instructions) -> int:
-    board = Board(len(instructions[0]), len(instructions))
-    
-    for row in range(len(instructions)):
-        for col in range(len(instructions[row])):
-            board.set_node(Node((row, col), instructions[row][col]))
-            
-            if instructions[row][col] == "S":
-                board.set_start_position((row, col))
-            elif instructions[row][col] == "E":
-                board.set_end_position((row, col))
-    
-    print(board)
-    cost, path, num_straights, num_turns = board.find_shortest_path()
-    print(f"Number of straights: {num_straights}")
-    print(f"Number of turns: {num_turns}")
-    return cost
     
 
-def part2(instructions) -> int:
+if len(sys.argv) < 2:
+    sys.exit(1)
+
+input_file = sys.argv[1]
+
+with open(input_file) as f:
+    instructions = [line.strip() for line in f.readlines()]
+    
+    sys.setrecursionlimit(1000000)
+
     board = Board(len(instructions[0]), len(instructions))
     for row in range(len(instructions)):
         for col in range(len(instructions[row])):
@@ -240,18 +199,5 @@ def part2(instructions) -> int:
                 if node.symbol == ".":
                     node.symbol = "*"
     print(board)
-    return len(nodes_in_best_paths)
-    
-
-if len(sys.argv) < 2:
-    sys.exit(1)
-
-input_file = sys.argv[1]
-
-with open(input_file) as f:
-    instructions = [line.strip() for line in f.readlines()]
-    
-    sys.setrecursionlimit(1000000)
-
-    print(part1(instructions))
-    print(part2(instructions))
+    print(f"Minimum Cost: {min_cost}")
+    print(f"Number of nodes in best paths: {len(nodes_in_best_paths)}")
