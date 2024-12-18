@@ -1,4 +1,10 @@
+import os
 import sys
+import time
+from colorama import init
+from termcolor import colored
+
+init()
 
 A = 'a'
 B = 'b'
@@ -55,7 +61,7 @@ class Computer:
         denominator = 2 ** self.get_combo(operand)
         self.registers[C] = self.registers[A] // denominator
 
-    def run(self, program, a=None):
+    def run(self, program, a=None, visualize=False):
         if a is not None:
             self.registers[A] = a
         self.registers[B] = 0
@@ -72,6 +78,42 @@ class Computer:
 
             if opcode != 3 or self.registers[A] == 0:
                 self.pointer += 2
+            
+            if visualize:
+                os.system('cls||clear')
+                print(f"Registries:")
+                print(f"A: {colored(self.registers[A], 'red')}")
+                print(f"B: {colored(self.registers[B], 'green')}")
+                print(f"C: {colored(self.registers[C], 'blue')}")
+                
+                instructions = program[self.pointer:self.pointer + 2]
+                highlighted_instructions = [
+                    colored(instr, 'white', 'on_yellow') if i == self.pointer else colored(instr, 'white', 'on_blue') if i == self.pointer + 1 else str(instr)
+                    for i, instr in enumerate(program)
+                ]
+                print(f"Instructions: {', '.join(highlighted_instructions)}")
+                
+                #print(f"Executing: {colored(['adv', 'bxl', 'bst', 'jnz', 'bxc', 'out', 'bdv', 'cdv'][opcode], 'cyan')} with operand {colored(operand, 'magenta')}")
+                if opcode == 0:
+                    print(f"Operation: {colored('adv', 'yellow')} - {colored('A', 'red')} = {colored('A', 'red')} // (2 ** {colored(operand, 'blue')})")
+                elif opcode == 1:
+                    print(f"Operation: {colored('bxl', 'yellow')} - {colored('B', 'green')} = {colored('B', 'green')} ^ {colored(operand, 'blue')}")
+                elif opcode == 2:
+                    print(f"Operation: {colored('bst', 'yellow')} - {colored('B', 'green')} = {colored(operand, 'blue')} % 8")
+                elif opcode == 3:
+                    print(f"Operation: {colored('jnz', 'yellow')} - if {colored('A', 'red')} != 0, jump to {colored(operand, 'blue')}")
+                elif opcode == 4:
+                    print(f"Operation: {colored('bxc', 'yellow')} - {colored('B', 'green')} = {colored('B', 'green')} ^ {colored('C', 'blue')}")
+                elif opcode == 5:
+                    print(f"Operation: {colored('out', 'yellow')} - output {colored(operand, 'blue')} % 8")
+                elif opcode == 6:
+                    print(f"Operation: {colored('bdv', 'yellow')} - {colored('B', 'green')} = {colored('A', 'red')} // (2 ** {colored(operand, 'blue')})")
+                elif opcode == 7:
+                    print(f"Operation: {colored('cdv', 'yellow')} - {colored('C', 'blue')} = {colored('A', 'red')} // (2 ** {colored(operand, 'blue')})")
+                
+                print(f"Output: {colored(self.output, 'green')}")
+                time.sleep(0.5)
+                
         
         return self.output
 
@@ -93,16 +135,17 @@ class Computer:
         elif opcode == 7:
             self.cdv(operand)
 
-def part1(a, program) -> str:
+def part1(a, program, visualize=False) -> str:
     computer = Computer()
     
-    return ','.join(map(str, computer.run(program, a)))
+    return ','.join(map(str, computer.run(program, a, visualize=visualize)))
 
-def part2(program) -> int:
+def part2(program, visualize=False) -> int:
     computer = Computer()
     a = 0
     
     for current_instruction in range(1, len(program) + 1):
+        
         target = program[len(program) - current_instruction:]
         a *= 8
         while True:
@@ -110,6 +153,14 @@ def part2(program) -> int:
                 break
             
             a += 1
+            if visualize:
+                os.system('cls||clear')
+                print(f"Trying a =       {colored(a, 'cyan')}")
+                output = computer.run(program, a)
+                print(f"Current Output:  {colored(output, 'green')}")
+                print(f"Looking for:     {colored(target, 'magenta')}")
+                print(f"Ultimate target: {colored(program, 'yellow')}")
+                time.sleep(0.03)
             
     return a
 
@@ -121,6 +172,6 @@ with open(input_file) as f:
     a = int(lines[0].split(':')[1].strip())
     program = list(map(int, lines[4].split(":")[1].strip().split(',')))
     
-    print(part1(a, program))
-    print(part2(program))
+    print(part1(a, program, visualize=True))
+    print(part2(program, visualize=True))
 
