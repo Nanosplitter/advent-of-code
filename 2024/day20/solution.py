@@ -55,7 +55,7 @@ class Board:
         while current_node.position != self.end_position:
             current_node.dist_from_start = len(path)
             path.append(current_node)
-            for direction, neighbor in current_node.find_neighbors(self).items():
+            for _, neighbor in current_node.find_neighbors(self).items():
                 if neighbor is not None and neighbor.dist_from_start is None:
                     current_node = neighbor
                     break
