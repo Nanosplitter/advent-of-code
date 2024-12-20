@@ -1,10 +1,34 @@
 from collections import defaultdict, Counter
+import os
 import sys
+import time
+
+from termcolor import colored
 
 UP = (-1, 0)
 DOWN = (1, 0)
 LEFT = (0, -1)
 RIGHT = (0, 1)
+
+def print_board(board, nodes_to_highlight={}):
+    res = ""
+    for row in range(board.height):
+        print(res)
+        res = ""
+        for col in range(board.width):
+            node = board.nodes[(row, col)]
+            if node is not None: 
+                if node.symbol == "S":
+                    res += colored("S ", 'white', 'on_green')
+                elif node.symbol == "E":
+                    res += colored("E ", 'white', 'on_red')
+                elif node in nodes_to_highlight:
+                    res += colored("  ", 'white', nodes_to_highlight[node])
+                elif node.symbol == "#":
+                    res += colored("  ", 'white', 'on_black')
+                else:
+                    res += "  "                
+    print(res)
 
 class Node:
     def __init__(self, position, symbol):
@@ -28,6 +52,12 @@ class Node:
         
         self.neighbors = neighbors
         return neighbors
+    
+    def __str__(self):
+        return f"Node({self.symbol}, {self.position})"
+    
+    def __repr__(self):
+        return self.__str__()
     
     
 class Board:
@@ -67,11 +97,24 @@ class Board:
 def get_all_shortcuts(path, max_shortcut_length):
     shortcuts = []
     
+    
+    
     for node in path:
+        best_shortcut = 0
+        nodes_to_highlight = defaultdict(str)
+        nodes_to_highlight[node] = 'on_blue'
         for target_node in path:
             distance = abs(node.position[0] - target_node.position[0]) + abs(node.position[1] - target_node.position[1])
             if distance <= max_shortcut_length and target_node.dist_from_start > node.dist_from_start + distance:
-                shortcuts.append(target_node.dist_from_start - node.dist_from_start - distance)
+                nodes_to_highlight[target_node] = 'on_white'
+                
+                cost_save = target_node.dist_from_start - node.dist_from_start - distance
+                best_shortcut = max(best_shortcut, cost_save)
+                shortcuts.append(cost_save)
+        os.system('cls||clear')
+        print_board(board, nodes_to_highlight)
+        print(f"Best shortcut saves {best_shortcut} steps.")
+        time.sleep(0.5)
     
     return sum([shortcut[1] for shortcut in Counter(shortcuts).items() if shortcut[0] >= 100])
 
@@ -100,9 +143,12 @@ if __name__ == "__main__":
                     elif instructions[row][col] == "E":
                         board.set_end_position((row, col))
             
+            
             path = board.find_path()
             
-            print(part1(path))
+            print_board(board)
+            
+            #print(part1(path))
             print(part2(path))
     except KeyboardInterrupt:
         print("Execution interrupted by user.")
