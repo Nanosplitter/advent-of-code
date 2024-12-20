@@ -1,14 +1,10 @@
 from collections import defaultdict, Counter
-from functools import cache
 import sys
 
 UP = (-1, 0)
 DOWN = (1, 0)
 LEFT = (0, -1)
 RIGHT = (0, 1)
-
-def node_default():
-    return None
 
 class Node:
     def __init__(self, position, symbol):
@@ -40,7 +36,7 @@ class Board:
         self.height = height
         self.start_position = None
         self.end_position = None
-        self.nodes = defaultdict(node_default)
+        self.nodes = defaultdict(None)
     
     def set_node(self, node):
         self.nodes[node.position] = node
@@ -68,28 +64,23 @@ class Board:
         path.append(current_node)
         return path
 
-def part1(board):
-    
-    path = board.find_path()
-    
+def get_all_shortcuts(path, max_shortcut_length):
     shortcuts = []
     
-    counter = 0
-    
     for node in path:
-        counter += 1
-        print(f"[{counter}/{len(path)}] {node.position}")
         for target_node in path:
             distance = abs(node.position[0] - target_node.position[0]) + abs(node.position[1] - target_node.position[1])
-            if distance <= 20 and target_node.dist_from_start > node.dist_from_start + distance:
+            if distance <= max_shortcut_length and target_node.dist_from_start > node.dist_from_start + distance:
                 shortcuts.append(target_node.dist_from_start - node.dist_from_start - distance)
     
-    shortcuts = sorted(shortcuts, reverse=True)
-    
-    shortcut_counter = sorted(Counter(shortcuts).items(), key=lambda x: x[0], reverse=True)
-    
-    return sum([shortcut[1] for shortcut in shortcut_counter if shortcut[0] >= 100])
+    return sum([shortcut[1] for shortcut in Counter(shortcuts).items() if shortcut[0] >= 100])
 
+def part1(path):
+    return get_all_shortcuts(path, 2)
+
+def part2(path):
+    return get_all_shortcuts(path, 20)
+    
 if __name__ == "__main__":
     try:
         if len(sys.argv) < 2:
@@ -100,8 +91,6 @@ if __name__ == "__main__":
         with open(input_file) as f:
             instructions = [line.strip() for line in f.readlines()]
 
-            sys.setrecursionlimit(1000000)
-
             board = Board(len(instructions[0]), len(instructions))
             for row in range(len(instructions)):
                 for col in range(len(instructions[row])):
@@ -111,7 +100,10 @@ if __name__ == "__main__":
                     elif instructions[row][col] == "E":
                         board.set_end_position((row, col))
             
-            print(part1(board))
+            path = board.find_path()
+            
+            print(part1(path))
+            print(part2(path))
     except KeyboardInterrupt:
         print("Execution interrupted by user.")
         sys.exit(1)
