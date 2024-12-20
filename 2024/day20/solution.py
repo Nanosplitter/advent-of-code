@@ -2,33 +2,36 @@ from collections import defaultdict, Counter
 import os
 import sys
 import time
-
-from termcolor import colored
+import curses
 
 UP = (-1, 0)
 DOWN = (1, 0)
 LEFT = (0, -1)
 RIGHT = (0, 1)
 
-def print_board(board, nodes_to_highlight={}):
-    res = ""
+def print_board(stdscr, board, nodes_to_highlight={}):
+    stdscr.clear()
+    max_y, max_x = stdscr.getmaxyx()
     for row in range(board.height):
-        print(res)
-        res = ""
         for col in range(board.width):
+            if row >= max_y or (col * 2) >= max_x:
+                continue
             node = board.nodes[(row, col)]
-            if node is not None: 
+            symbol = "  "
+            color_pair = 0
+            if node is not None:
                 if node.symbol == "S":
-                    res += colored("S ", 'white', 'on_green')
+                    color_pair = 1  # e.g. curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_GREEN)
                 elif node.symbol == "E":
-                    res += colored("E ", 'white', 'on_red')
+                    color_pair = 2
                 elif node in nodes_to_highlight:
-                    res += colored("  ", 'white', nodes_to_highlight[node])
+                    color_pair = 3
                 elif node.symbol == "#":
-                    res += colored("  ", 'white', 'on_black')
+                    color_pair = 4
                 else:
-                    res += "  "                
-    print(res)
+                    color_pair = 0
+            stdscr.addstr(row, col*2, symbol, curses.color_pair(color_pair))
+    stdscr.refresh()
 
 class Node:
     def __init__(self, position, symbol):
@@ -94,11 +97,8 @@ class Board:
         path.append(current_node)
         return path
 
-def get_all_shortcuts(path, max_shortcut_length):
+def get_all_shortcuts(stdscr, board, path, max_shortcut_length):
     shortcuts = []
-    
-    
-    
     for node in path:
         best_shortcut = 0
         nodes_to_highlight = defaultdict(str)
@@ -111,20 +111,28 @@ def get_all_shortcuts(path, max_shortcut_length):
                 cost_save = target_node.dist_from_start - node.dist_from_start - distance
                 best_shortcut = max(best_shortcut, cost_save)
                 shortcuts.append(cost_save)
-        os.system('cls||clear')
-        print_board(board, nodes_to_highlight)
-        print(f"Best shortcut saves {best_shortcut} steps.")
-        time.sleep(0.5)
+        stdscr.clear()
+        print_board(stdscr, board, nodes_to_highlight)
+        stdscr.addstr(board.height+1, 0, f"Best shortcut saves {best_shortcut} steps.")
+        stdscr.refresh()
+        curses.napms(200)
     
     return sum([shortcut[1] for shortcut in Counter(shortcuts).items() if shortcut[0] >= 100])
 
 def part1(path):
     return get_all_shortcuts(path, 2)
 
-def part2(path):
-    return get_all_shortcuts(path, 20)
+def part2(stdscr, board, path):
+    return get_all_shortcuts(stdscr, board, path, 20)
     
-if __name__ == "__main__":
+def main(stdscr):
+    curses.start_color()
+    curses.use_default_colors()
+    curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_GREEN)
+    curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
+    curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_WHITE)
+    curses.init_pair(4, curses.COLOR_WHITE, curses.COLOR_BLACK)
+    
     try:
         if len(sys.argv) < 2:
             sys.exit(1)
@@ -146,10 +154,14 @@ if __name__ == "__main__":
             
             path = board.find_path()
             
-            print_board(board)
-            
-            #print(part1(path))
-            print(part2(path))
+            result = part2(stdscr, board, path)
+            stdscr.addstr(board.height+2, 0, str(result))
+            stdscr.refresh()
     except KeyboardInterrupt:
-        print("Execution interrupted by user.")
+        stdscr.addstr(board.height+3, 0, "Execution interrupted by user.")
+        stdscr.refresh()
+        curses.napms(2000)
         sys.exit(1)
+
+if __name__ == "__main__":
+    curses.wrapper(main)
