@@ -9,8 +9,7 @@ DOWN = (1, 0)
 LEFT = (0, -1)
 RIGHT = (0, 1)
 
-def print_board(stdscr, board, nodes_to_highlight={}):
-    stdscr.clear()
+def print_board(stdscr, board, nodes_to_highlight={}, previous_board=None):
     max_y, max_x = stdscr.getmaxyx()
     for row in range(board.height):
         for col in range(board.width):
@@ -30,8 +29,10 @@ def print_board(stdscr, board, nodes_to_highlight={}):
                     color_pair = 4
                 else:
                     color_pair = 0
-            stdscr.addstr(row, col*2, symbol, curses.color_pair(color_pair))
+            if previous_board is None or previous_board[row][col] != (symbol, color_pair):
+                stdscr.addstr(row, col*2, symbol, curses.color_pair(color_pair))
     stdscr.refresh()
+    return [[(board.nodes[(row, col)].symbol if board.nodes[(row, col)] is not None else "  ", color_pair) for col in range(board.width)] for row in range(board.height)]
 
 class Node:
     def __init__(self, position, symbol):
@@ -111,11 +112,11 @@ def get_all_shortcuts(stdscr, board, path, max_shortcut_length):
                 cost_save = target_node.dist_from_start - node.dist_from_start - distance
                 best_shortcut = max(best_shortcut, cost_save)
                 shortcuts.append(cost_save)
-        stdscr.clear()
+        stdscr.erase()
         print_board(stdscr, board, nodes_to_highlight)
         stdscr.addstr(board.height+1, 0, f"Best shortcut saves {best_shortcut} steps.")
         stdscr.refresh()
-        curses.napms(200)
+        curses.napms(3)
     
     return sum([shortcut[1] for shortcut in Counter(shortcuts).items() if shortcut[0] >= 100])
 
