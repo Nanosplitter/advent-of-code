@@ -1,7 +1,9 @@
 from collections import defaultdict
 from functools import cache, lru_cache
 from itertools import product
+import os
 import sys
+import time
 
 N_PAD = {
     "0": [("2", "^"), ("A", ">")],
@@ -86,6 +88,82 @@ def part1(codes):
 def part2(codes):
     return get_complexity(codes, 25)
 
+# VISUALIZATION
+
+@cache
+def get_keypad_path(code, num_robots, robot_type=0):
+    if num_robots == 0:
+        return code
+    
+    complete_path = []
+    for pair in zip(('A',) + code, code):
+        if robot_type == 0:
+            paths = num_paths_cache[pair]
+        else:
+            paths = key_paths_cache[pair]
+
+        complete_path += min([get_keypad_path(path + ('A',), num_robots - 1, 1) for path in paths], key=len)
+    
+    return complete_path
+
+
+
+class Keypad:
+    def __init__(self, key_type, name):
+        self.name = name
+        self.key_type = key_type
+        if key_type == 0:
+            self.keys = [
+                ['7', '8', '9'],
+                ['4', '5', '6'],
+                ['1', '2', '3'],
+                [' ', '0', 'A']
+            ]
+        else:
+            self.keys = [
+                [' ', '^', 'A'],
+                ['<', 'v', '>'],
+            ]
+        self.pointer = 'A'
+        self.pressed = False
+    
+    def process_input(self, instruction):
+        if instruction == ' ':
+            self.pressed = False
+        
+        if instruction == 'A':
+            self.pressed = True
+        
+        pad = N_PAD if self.key_type == 0 else D_PAD
+        
+        for next, dir in pad[self.pointer]:
+            if instruction == dir:
+                self.pointer = next
+                break
+
+    def __str__(self):
+        border = "             "
+        lines = []
+        for row in self.keys:
+            lines.append(border)
+            line = ""
+            for key in row:
+                if key == self.pointer:
+                    if self.pressed:
+                        line += f" \033[42m {key} \033[0m"
+                    else:
+                        line += f" \033[93m {key} \033[0m"
+                else:
+                    line += f"  {key} "
+            line += " "
+            lines.append(line)
+        lines.append(border)
+        return self.name + "\n" + "\n".join(lines) + "\n"
+
+
+
+
+
 if len(sys.argv) < 2:
     sys.exit(1)
 
@@ -103,5 +181,87 @@ with open(input_file) as f:
         key_paths_cache[combo] = bfs(1, combo[0], combo[1])
 
     codes = [code.strip() for code in instructions]
-    print(part1(codes))
-    print(part2(codes))
+    #print(part1(codes))
+    #print(part2(codes))
+    
+    presses1 = "".join(get_keypad_path(tuple(list(codes[0])), 1))
+    presses2 = "".join(get_keypad_path(tuple(list(codes[0])), 2))
+    presses3 = "".join(get_keypad_path(tuple(list(codes[0])), 3))
+    
+    print(presses1)
+    print(presses2)
+    print(presses3)
+    
+    new_presses2 = ""
+    new_presses1 = ""
+    
+    for press in presses3:
+        if press == "A":
+            new_presses2 += presses2[0]
+            presses2 = presses2[1:]
+        else:
+            new_presses2 += " "
+    
+    for press in new_presses2:
+        if press == "A":
+            new_presses1 += presses1[0]
+            presses1 = presses1[1:]
+            
+        else:
+            new_presses1 += " "
+    
+    print(new_presses1)
+    print(new_presses2)
+    print(presses3)
+    
+    presses = [presses3, new_presses2, new_presses1]
+    keypads = [Keypad(1, "Robot 1 keypad"), Keypad(1, "Robot 2 keypad"), Keypad(0, "Robot 3 numpad")]
+    
+    human_keypad = Keypad(1, "Human keypad")
+    
+    output = ""
+    for press_index in range(len(presses[0])):
+        human_keypad.pointer = presses[0][press_index]
+        human_keypad.pressed = True
+        os.system('cls||clear')
+        print(human_keypad)
+        
+        for pad_index in range(len(presses)):
+            keypads[pad_index].process_input(presses[pad_index][press_index])
+            print(keypads[pad_index])
+        print(f"Output: {output}")
+        time.sleep(0.5)
+
+        
+        if keypads[-1].pressed:
+            output += keypads[-1].pointer
+        print(f"Output: {output}")
+        
+        os.system('cls||clear')
+        human_keypad.pressed = False
+        print(human_keypad)
+        for pad_index in range(len(presses)):
+            keypads[pad_index].pressed = False
+            print(keypads[pad_index])
+        print(f"Output: {output}")
+        time.sleep(0.2)
+        
+        
+        
+    
+    # keys = Keypad(0)
+    # for press in presses:
+    #     os.system('cls||clear')
+    #     keys.process_input(press)
+    #     print(keys)
+    #     if keys.pressed:
+    #         time.sleep(0.15)
+    #     else:
+    #         time.sleep(0.5)
+    #     keys.pressed = False
+    #     os.system('cls||clear')
+    #     print(keys)
+    #     time.sleep(0.1)
+        
+
+
