@@ -1,5 +1,5 @@
 from collections import defaultdict
-from functools import cache, lru_cache
+from functools import cache
 from itertools import product
 import os
 import sys
@@ -88,8 +88,6 @@ def part1(codes):
 def part2(codes):
     return get_complexity(codes, 25)
 
-# VISUALIZATION
-
 @cache
 def get_keypad_path(code, num_robots, robot_type=0):
     if num_robots == 0:
@@ -105,8 +103,6 @@ def get_keypad_path(code, num_robots, robot_type=0):
         complete_path += min([get_keypad_path(path + ('A',), num_robots - 1, 1) for path in paths], key=len)
     
     return complete_path
-
-
 
 class Keypad:
     def __init__(self, key_type, name):
@@ -156,7 +152,7 @@ class Keypad:
                     else:
                         line += f" \033[93m {key} \033[0m "
                 else:
-                    line += f"  {key}  "  # Adjusted spacing for alignment
+                    line += f"  {key}  "
             line += " "
             lines.append(line)
         lines.append(border)
@@ -179,82 +175,84 @@ with open(input_file) as f:
         key_paths_cache[combo] = bfs(1, combo[0], combo[1])
 
     codes = [code.strip() for code in instructions]
-    #print(part1(codes))
-    #print(part2(codes))
+    print(part1(codes))
+    print(part2(codes))
     
-    num_robots = 3
+    visualize = False
     
-    presses = ["".join(get_keypad_path(tuple(list(codes[0])), robot + 1)) for robot in range(num_robots)[::-1]]
+    if visualize:
     
-    for robot in range(1, num_robots):
-        new_presses = ""
-        for press in presses[robot - 1]:
-            if press == "A":
-                new_presses += presses[robot][0]
-                presses[robot] = presses[robot][1:]
-            else:
-                new_presses += " "
-        presses[robot] = new_presses
-    
-    for press in presses:
-        print(press)
-    
-    keypads = [Keypad(1, f"Robot {i + 1} Keypad") for i in range(num_robots - 1)]
-    keypads.append(Keypad(0, "Final Robot Numpad"))
-    
-    human_keypad = Keypad(1, "Human keypad")
-    
-    output = ""
-    for press_index in range(len(presses[0])):
-        instructions_str = ""
-        for i, press in enumerate(presses[0]):
-            if i % 36 == 0:
-                instructions_str += "\n"
-            if i == press_index:
-                instructions_str += f"\033[93m{press}\033[0m "
-            else:
-                instructions_str += f"{press} "
-        instructions_str += "\n"
+        num_robots = 3
         
-        # Update Human Keypad
-        human_keypad.pointer = presses[0][press_index]
-        human_keypad.pressed = True
-        os.system('cls||clear')
+        presses = ["".join(get_keypad_path(tuple(list(codes[0])), robot + 1)) for robot in range(num_robots)[::-1]]
         
-        # Update all keypads with their respective presses
-        for i, pad in enumerate(keypads):
-            pad.process_input(presses[i][press_index])
+        for robot in range(1, num_robots):
+            new_presses = ""
+            for press in presses[robot - 1]:
+                if press == "A":
+                    new_presses += presses[robot][0]
+                    presses[robot] = presses[robot][1:]
+                else:
+                    new_presses += " "
+            presses[robot] = new_presses
         
-        human_str = str(human_keypad).split('\n')
-        keypad_strs = [str(pad).split('\n') for pad in keypads]
+        for press in presses:
+            print(press)
         
-        combined = "\n".join(
-            "  ".join(pads[i] for pads in [human_str] + keypad_strs)
-            for i in range(len(human_str))
-        )
-        print(f"Instructions:\n{instructions_str}")
-        print(combined)
-        print(f"Output: {output}")
+        keypads = [Keypad(1, f"Robot {i + 1} Keypad") for i in range(num_robots - 1)]
+        keypads.append(Keypad(0, "Final Robot Numpad"))
         
-        time.sleep(0.5)
+        human_keypad = Keypad(1, "Human keypad")
+        
+        output = ""
+        for press_index in range(len(presses[0])):
+            instructions_str = ""
+            for i, press in enumerate(presses[0]):
+                if i % 36 == 0:
+                    instructions_str += "\n"
+                if i == press_index:
+                    instructions_str += f"\033[93m{press}\033[0m "
+                else:
+                    instructions_str += f"{press} "
+            instructions_str += "\n"
 
-        if keypads[-1].pressed:
-            output += keypads[-1].pointer
-        
-        os.system('cls||clear')
-        human_keypad.pressed = False
-        
-        for key in keypads:
-            key.pressed = False
-        
-        combined = "\n".join(
-            "  ".join(pads[i] for pads in [str(human_keypad).split('\n')] + [str(pad).split('\n') for pad in keypads])
-            for i in range(len(str(human_keypad).split('\n')))
-        )
-        print(f"Instructions:\n{instructions_str}")
-        print(combined)
-        print(f"Output: {output}")
-        time.sleep(0.2)
+            human_keypad.pointer = presses[0][press_index]
+            human_keypad.pressed = True
+            os.system('cls||clear')
+            
+            for i, pad in enumerate(keypads):
+                pad.process_input(presses[i][press_index])
+            
+            human_str = str(human_keypad).split('\n')
+            keypad_strs = [str(pad).split('\n') for pad in keypads]
+            
+            combined = "\n".join(
+                "  ".join(pads[i] for pads in [human_str] + keypad_strs)
+                for i in range(len(human_str))
+            )
+            print(f"Instructions:\n{instructions_str}")
+            print(combined)
+            print(f"Output: {output}")
+            
+            time.sleep(0.5)
+
+            if keypads[-1].pressed:
+                output += keypads[-1].pointer
+            
+            os.system('cls||clear')
+            human_keypad.pressed = False
+            
+            for key in keypads:
+                key.pressed = False
+            
+            combined = "\n".join(
+                "  ".join(pads[i] for pads in [str(human_keypad).split('\n')] + [str(pad).split('\n') for pad in keypads])
+                for i in range(len(str(human_keypad).split('\n')))
+            )
+            print(f"Instructions:\n{instructions_str}")
+            print(combined)
+            print(f"Output: {output}")
+            time.sleep(0.2)
 
 
 
