@@ -9,25 +9,17 @@ connections = defaultdict(list)
 connected_pairs = defaultdict(bool)
     
 
-def is_interconnected(group):
-    for connection in group:
-        for other_connection in group:
-            if connection == other_connection:
-                continue
-            if other_connection not in connections[connection]:
-                return False
-    return True
+def is_interconnected(pair, node):
+    return pair[0] in connections[node] and pair[1] in connections[node] and pair[0] in connections[pair[1]]
 
 def get_interconnected_groups(group_size):
     groups = set()
     for connection in connections:
         
-        pairs = product(connections[connection], repeat=group_size - 1)
-        for pair in pairs:
-            if list(set(pair)) != list(pair):
-                continue
-            
-            if is_interconnected(pair + (connection,)):
+        pairs = list(product(connections[connection], repeat=group_size - 1))
+        
+        for pair in pairs:        
+            if is_interconnected(pair, connection):
                 groups.add(tuple(sorted(pair + (connection,))))
 
     return list(groups)
@@ -54,9 +46,6 @@ with open(input_file) as f:
         connection = connection.strip().split("-")
         connections[connection[0]].append(connection[1])
         connections[connection[1]].append(connection[0])
-
-    for key in connections:
-        connections[key].sort()
     
     
     print(part1())
