@@ -10,14 +10,9 @@ def get_windows(lst, n):
     return list(map(tuple, zip(*[lst[i:] for i in range(n)])))
 
 def get_next(sn):
-    sn = mix(sn, sn * 64)
-    sn = prune(sn)
-    
-    sn = mix(sn, sn // 32)
-    sn = prune(sn)
-    
-    sn = mix(sn, sn * 2048)
-    sn = prune(sn)
+    sn = prune(mix(sn, sn * 64))
+    sn = prune(mix(sn, sn // 32))
+    sn = prune(mix(sn, sn * 2048))
     
     return sn
     
