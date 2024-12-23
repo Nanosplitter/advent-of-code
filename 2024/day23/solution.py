@@ -6,9 +6,6 @@ import sys
 
 connections = defaultdict(list)
 
-connected_pairs = defaultdict(bool)
-    
-
 def is_interconnected(pair, node):
     return pair[0] in connections[node] and pair[1] in connections[node] and pair[0] in connections[pair[1]]
 
