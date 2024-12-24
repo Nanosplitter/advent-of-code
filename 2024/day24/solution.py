@@ -1,5 +1,10 @@
 from collections import defaultdict
 import sys
+from python_mermaid.diagram import (
+    MermaidDiagram,
+    Node,
+    Link
+)
     
 def part1(wires, rules) -> int:
     
@@ -34,12 +39,48 @@ def part1(wires, rules) -> int:
     
     
     
-    print(f"x: {x_decimal}, y: {y_decimal}, z: {z_decimal}")
+    #print(f"x: {x_decimal}, y: {y_decimal}, z: {z_decimal}")
         
-    return wires
+    return z_decimal
 
 def part2(instructions) -> int:
-    return 0
+    nodes = []
+    
+    # for wire in wires:
+    #     nodes.append(Node(wire))
+    
+    # print(nodes)
+    
+    links = []
+    
+    wires_to_nodes = {}
+    for wire in wires:
+        node = Node(wire)
+        nodes.append(node)
+        wires_to_nodes[wire] = node
+    
+    for rule in rules:
+        if rule[1] == "AND":
+            gate_node = Node(f"{rule[0]} AND {rule[2]}")
+        elif rule[1] == "OR":
+            gate_node = Node(f"{rule[0]} OR {rule[2]}")
+        elif rule[1] == "XOR":
+            gate_node = Node(f"{rule[0]} XOR {rule[2]}")
+        
+        nodes.append(gate_node)
+        
+        links.append(Link(wires_to_nodes[rule[0]], gate_node))
+        links.append(Link(wires_to_nodes[rule[2]], gate_node))
+        links.append(Link(gate_node, wires_to_nodes[rule[3]]))
+    
+    diagram = MermaidDiagram(
+        title="wires",
+        nodes=nodes, 
+        links=links,
+        orientation="bottom to top")
+    
+    with open("diagram.md", "w") as f:
+        f.write(str(diagram))
 
 if len(sys.argv) < 2:
     sys.exit(1)
@@ -71,4 +112,4 @@ with open(input_file) as f:
     #print(rules)
 
     print(part1(wires, rules))
-    #print(part2(instructions))
+    print(part2(instructions))
