@@ -1,26 +1,8 @@
 from collections import defaultdict
 import sys
-from python_mermaid.diagram import (
-    MermaidDiagram,
-    Node,
-    Link
-)
+import graphviz
     
 def part1(wires, rules) -> int:
-    
-    x_wires = sorted([wire for wire in wires if wire.startswith("x")], reverse=True)
-    y_wires = sorted([wire for wire in wires if wire.startswith("y")], reverse=True)
-        
-    
-    
-    x_binary = "".join([str(int(wires[wire])) for wire in x_wires])
-    x_decimal = int(x_binary, 2)
-    
-    y_binary = "".join([str(int(wires[wire])) for wire in y_wires])
-    y_decimal = int(y_binary, 2)
-    
-    print(f"x: {x_decimal}, y: {y_decimal}")
-    
     for i in range(1000):
         for rule in rules:
             if rule[1] == "AND":
@@ -36,51 +18,36 @@ def part1(wires, rules) -> int:
     z_binary = "".join([str(int(wires[wire])) for wire in z_wires])
     
     z_decimal = int(z_binary, 2)
-    
-    
-    
-    #print(f"x: {x_decimal}, y: {y_decimal}, z: {z_decimal}")
         
     return z_decimal
 
-def part2(instructions) -> int:
-    nodes = []
+def part2(wires, rules) -> int:
+    dot = graphviz.Digraph(comment='Wires', format='png')
     
-    # for wire in wires:
-    #     nodes.append(Node(wire))
-    
-    # print(nodes)
-    
-    links = []
-    
-    wires_to_nodes = {}
+    wires = sorted(wires.keys())
+    rules = sorted(rules)
+
     for wire in wires:
-        node = Node(wire)
-        nodes.append(node)
-        wires_to_nodes[wire] = node
-    
+        dot.node(wire)
+
     for rule in rules:
         if rule[1] == "AND":
-            gate_node = Node(f"{rule[0]} AND {rule[2]}")
+            gate_label = f"{rule[0]} AND {rule[2]}"
+            color = "red"
         elif rule[1] == "OR":
-            gate_node = Node(f"{rule[0]} OR {rule[2]}")
+            gate_label = f"{rule[0]} OR {rule[2]}"
+            color = "green"
         elif rule[1] == "XOR":
-            gate_node = Node(f"{rule[0]} XOR {rule[2]}")
-        
-        nodes.append(gate_node)
-        
-        links.append(Link(wires_to_nodes[rule[0]], gate_node))
-        links.append(Link(wires_to_nodes[rule[2]], gate_node))
-        links.append(Link(gate_node, wires_to_nodes[rule[3]]))
-    
-    diagram = MermaidDiagram(
-        title="wires",
-        nodes=nodes, 
-        links=links,
-        orientation="bottom to top")
-    
-    with open("diagram.md", "w") as f:
-        f.write(str(diagram))
+            gate_label = f"{rule[0]} XOR {rule[2]}"
+            color = "blue"
+
+        dot.node(gate_label, rule[1], color=color)
+
+        dot.edge(rule[0], gate_label)
+        dot.edge(rule[2], gate_label)
+        dot.edge(gate_label, rule[3])
+
+    # dot.render('diagram.gv', view=False)
 
 if len(sys.argv) < 2:
     sys.exit(1)
@@ -107,9 +74,6 @@ with open(input_file) as f:
             rule = line.split(" ")
             rule.remove("->")
             rules.append(rule)
-            
-    #print(wires)
-    #print(rules)
 
     print(part1(wires, rules))
-    print(part2(instructions))
+    print(part2(wires, rules))

@@ -1,0 +1,1203 @@
+// Wires
+digraph {
+	bcp
+	bfg
+	bgs
+	bjr
+	bmc
+	bnc
+	bps
+	bqd
+	bqw
+	brj
+	brm
+	bsd
+	bsf
+	btc
+	bwr
+	cbv
+	ccp
+	ccs
+	cdb
+	cdw
+	cff
+	cft
+	cfw
+	cgf
+	chd
+	cjw
+	cms
+	cpf
+	csb
+	cth
+	cwb
+	cwg
+	cwh
+	ddh
+	ddq
+	dfm
+	dgk
+	dgm
+	djr
+	djt
+	dkd
+	dmw
+	dns
+	dpv
+	dsf
+	dsw
+	dtr
+	dvp
+	dwq
+	fcr
+	fdm
+	ffm
+	fmg
+	frj
+	fvp
+	gbv
+	ggd
+	ghb
+	gnd
+	gpq
+	gqg
+	gsf
+	gvs
+	hbv
+	hcg
+	hhp
+	hnh
+	hnw
+	hsd
+	htd
+	htn
+	htq
+	jfh
+	jsj
+	jtd
+	kfh
+	kgh
+	khs
+	kmg
+	kmm
+	kmn
+	kpv
+	kqk
+	ktp
+	mcs
+	mgt
+	mnh
+	mrp
+	mrt
+	msm
+	mtg
+	mwg
+	ncq
+	ngv
+	ngw
+	nhd
+	nmm
+	nng
+	nnh
+	nnt
+	npf
+	pbh
+	pbq
+	pfg
+	pgp
+	pgq
+	pgt
+	phn
+	pmm
+	pmr
+	pms
+	pnf
+	ppf
+	pqc
+	psj
+	pvw
+	pwn
+	qbf
+	qbn
+	qdw
+	qfb
+	qgc
+	qnw
+	qqt
+	qsm
+	qwj
+	rbw
+	rcd
+	rft
+	rgc
+	rgh
+	rhn
+	rjm
+	rkw
+	rqt
+	rrf
+	rtm
+	rvc
+	sbf
+	sbq
+	scm
+	sgv
+	shk
+	skc
+	skt
+	skw
+	sng
+	snk
+	srm
+	swt
+	thc
+	tmr
+	tnt
+	tqj
+	vcs
+	vdb
+	vdd
+	vdr
+	vfn
+	vgj
+	vgm
+	vjb
+	vjs
+	vpv
+	vqn
+	vtg
+	wdr
+	wgq
+	wmn
+	wph
+	wpp
+	wps
+	wpv
+	wsv
+	wsw
+	wvr
+	x00
+	x01
+	x02
+	x03
+	x04
+	x05
+	x06
+	x07
+	x08
+	x09
+	x10
+	x11
+	x12
+	x13
+	x14
+	x15
+	x16
+	x17
+	x18
+	x19
+	x20
+	x21
+	x22
+	x23
+	x24
+	x25
+	x26
+	x27
+	x28
+	x29
+	x30
+	x31
+	x32
+	x33
+	x34
+	x35
+	x36
+	x37
+	x38
+	x39
+	x40
+	x41
+	x42
+	x43
+	x44
+	y00
+	y01
+	y02
+	y03
+	y04
+	y05
+	y06
+	y07
+	y08
+	y09
+	y10
+	y11
+	y12
+	y13
+	y14
+	y15
+	y16
+	y17
+	y18
+	y19
+	y20
+	y21
+	y22
+	y23
+	y24
+	y25
+	y26
+	y27
+	y28
+	y29
+	y30
+	y31
+	y32
+	y33
+	y34
+	y35
+	y36
+	y37
+	y38
+	y39
+	y40
+	y41
+	y42
+	y43
+	y44
+	z00
+	z01
+	z02
+	z03
+	z04
+	z05
+	z06
+	z07
+	z08
+	z09
+	z10
+	z11
+	z12
+	z13
+	z14
+	z15
+	z16
+	z17
+	z18
+	z19
+	z20
+	z21
+	z22
+	z23
+	z24
+	z25
+	z26
+	z27
+	z28
+	z29
+	z30
+	z31
+	z32
+	z33
+	z34
+	z35
+	z36
+	z37
+	z38
+	z39
+	z40
+	z41
+	z42
+	z43
+	z44
+	z45
+	"bcp AND rgc" [label=AND color=red]
+	bcp -> "bcp AND rgc"
+	rgc -> "bcp AND rgc"
+	"bcp AND rgc" -> pbh
+	"bcp XOR rgc" [label=XOR color=blue]
+	bcp -> "bcp XOR rgc"
+	rgc -> "bcp XOR rgc"
+	"bcp XOR rgc" -> z08
+	"bfg AND vcs" [label=AND color=red]
+	bfg -> "bfg AND vcs"
+	vcs -> "bfg AND vcs"
+	"bfg AND vcs" -> hnh
+	"bgs OR dvp" [label=OR color=green]
+	bgs -> "bgs OR dvp"
+	dvp -> "bgs OR dvp"
+	"bgs OR dvp" -> vdd
+	"bmc AND wsw" [label=AND color=red]
+	bmc -> "bmc AND wsw"
+	wsw -> "bmc AND wsw"
+	"bmc AND wsw" -> qfb
+	"bqd AND qsm" [label=AND color=red]
+	bqd -> "bqd AND qsm"
+	qsm -> "bqd AND qsm"
+	"bqd AND qsm" -> skc
+	"bqw AND mnh" [label=AND color=red]
+	bqw -> "bqw AND mnh"
+	mnh -> "bqw AND mnh"
+	"bqw AND mnh" -> dsw
+	"brj AND thc" [label=AND color=red]
+	brj -> "brj AND thc"
+	thc -> "brj AND thc"
+	"brj AND thc" -> ngv
+	"bsd OR cpf" [label=OR color=green]
+	bsd -> "bsd OR cpf"
+	cpf -> "bsd OR cpf"
+	"bsd OR cpf" -> phn
+	"bsf OR ccs" [label=OR color=green]
+	bsf -> "bsf OR ccs"
+	ccs -> "bsf OR ccs"
+	"bsf OR ccs" -> gqg
+	"btc OR pvw" [label=OR color=green]
+	btc -> "btc OR pvw"
+	pvw -> "btc OR pvw"
+	"btc OR pvw" -> shk
+	"bwr OR vqn" [label=OR color=green]
+	bwr -> "bwr OR vqn"
+	vqn -> "bwr OR vqn"
+	"bwr OR vqn" -> bqd
+	"ccp OR vtg" [label=OR color=green]
+	ccp -> "ccp OR vtg"
+	vtg -> "ccp OR vtg"
+	"ccp OR vtg" -> nnt
+	"cdb AND rtm" [label=AND color=red]
+	cdb -> "cdb AND rtm"
+	rtm -> "cdb AND rtm"
+	"cdb AND rtm" -> cdw
+	"cdb XOR rtm" [label=XOR color=blue]
+	cdb -> "cdb XOR rtm"
+	rtm -> "cdb XOR rtm"
+	"cdb XOR rtm" -> z27
+	"cdw OR mgt" [label=OR color=green]
+	cdw -> "cdw OR mgt"
+	mgt -> "cdw OR mgt"
+	"cdw OR mgt" -> vdb
+	"cff OR rbw" [label=OR color=green]
+	cff -> "cff OR rbw"
+	rbw -> "cff OR rbw"
+	"cff OR rbw" -> qbf
+	"cft AND gsf" [label=AND color=red]
+	cft -> "cft AND gsf"
+	gsf -> "cft AND gsf"
+	"cft AND gsf" -> nhd
+	"cft XOR gsf" [label=XOR color=blue]
+	cft -> "cft XOR gsf"
+	gsf -> "cft XOR gsf"
+	"cft XOR gsf" -> z11
+	"cfw OR mwg" [label=OR color=green]
+	cfw -> "cfw OR mwg"
+	mwg -> "cfw OR mwg"
+	"cfw OR mwg" -> rvc
+	"cgf OR kgh" [label=OR color=green]
+	cgf -> "cgf OR kgh"
+	kgh -> "cgf OR kgh"
+	"cgf OR kgh" -> pfg
+	"chd AND mrp" [label=AND color=red]
+	chd -> "chd AND mrp"
+	mrp -> "chd AND mrp"
+	"chd AND mrp" -> cwg
+	"chd XOR mrp" [label=XOR color=blue]
+	chd -> "chd XOR mrp"
+	mrp -> "chd XOR mrp"
+	"chd XOR mrp" -> z33
+	"cms OR qdw" [label=OR color=green]
+	cms -> "cms OR qdw"
+	qdw -> "cms OR qdw"
+	"cms OR qdw" -> ktp
+	"csb XOR pfg" [label=XOR color=blue]
+	csb -> "csb XOR pfg"
+	pfg -> "csb XOR pfg"
+	"csb XOR pfg" -> z16
+	"cwg OR vjs" [label=OR color=green]
+	cwg -> "cwg OR vjs"
+	vjs -> "cwg OR vjs"
+	"cwg OR vjs" -> nng
+	"cwh AND wpv" [label=AND color=red]
+	cwh -> "cwh AND wpv"
+	wpv -> "cwh AND wpv"
+	"cwh AND wpv" -> kmg
+	"dfm AND ggd" [label=AND color=red]
+	dfm -> "dfm AND ggd"
+	ggd -> "dfm AND ggd"
+	"dfm AND ggd" -> skw
+	"dgm OR cth" [label=OR color=green]
+	dgm -> "dgm OR cth"
+	cth -> "dgm OR cth"
+	"dgm OR cth" -> msm
+	"djr XOR kqk" [label=XOR color=blue]
+	djr -> "djr XOR kqk"
+	kqk -> "djr XOR kqk"
+	"djr XOR kqk" -> bgs
+	"djt OR sbf" [label=OR color=green]
+	djt -> "djt OR sbf"
+	sbf -> "djt OR sbf"
+	"djt OR sbf" -> kfh
+	"dmw OR sbq" [label=OR color=green]
+	dmw -> "dmw OR sbq"
+	sbq -> "dmw OR sbq"
+	"dmw OR sbq" -> rtm
+	"dns AND qbf" [label=AND color=red]
+	dns -> "dns AND qbf"
+	qbf -> "dns AND qbf"
+	"dns AND qbf" -> bwr
+	"dns XOR qbf" [label=XOR color=blue]
+	dns -> "dns XOR qbf"
+	qbf -> "dns XOR qbf"
+	"dns XOR qbf" -> z41
+	"dsf OR tnt" [label=OR color=green]
+	dsf -> "dsf OR tnt"
+	tnt -> "dsf OR tnt"
+	"dsf OR tnt" -> wpv
+	"dsw OR pmr" [label=OR color=green]
+	dsw -> "dsw OR pmr"
+	pmr -> "dsw OR pmr"
+	"dsw OR pmr" -> pgq
+	"dtr AND brm" [label=AND color=red]
+	dtr -> "dtr AND brm"
+	brm -> "dtr AND brm"
+	"dtr AND brm" -> rft
+	"dtr XOR brm" [label=XOR color=blue]
+	dtr -> "dtr XOR brm"
+	brm -> "dtr XOR brm"
+	"dtr XOR brm" -> z38
+	"dwq XOR pgq" [label=XOR color=blue]
+	dwq -> "dwq XOR pgq"
+	pgq -> "dwq XOR pgq"
+	"dwq XOR pgq" -> pqc
+	"fcr XOR pqc" [label=XOR color=blue]
+	fcr -> "fcr XOR pqc"
+	pqc -> "fcr XOR pqc"
+	"fcr XOR pqc" -> z14
+	"fmg OR cjw" [label=OR color=green]
+	fmg -> "fmg OR cjw"
+	cjw -> "fmg OR cjw"
+	"fmg OR cjw" -> pgt
+	"ggd XOR dfm" [label=XOR color=blue]
+	ggd -> "ggd XOR dfm"
+	dfm -> "ggd XOR dfm"
+	"ggd XOR dfm" -> z10
+	"gnd AND ddh" [label=AND color=red]
+	gnd -> "gnd AND ddh"
+	ddh -> "gnd AND ddh"
+	"gnd AND ddh" -> vtg
+	"gnd XOR ddh" [label=XOR color=blue]
+	gnd -> "gnd XOR ddh"
+	ddh -> "gnd XOR ddh"
+	"gnd XOR ddh" -> z20
+	"gqg AND bps" [label=AND color=red]
+	gqg -> "gqg AND bps"
+	bps -> "gqg AND bps"
+	"gqg AND bps" -> cff
+	"gqg XOR bps" [label=XOR color=blue]
+	gqg -> "gqg XOR bps"
+	bps -> "gqg XOR bps"
+	"gqg XOR bps" -> z40
+	"gvs XOR hnw" [label=XOR color=blue]
+	gvs -> "gvs XOR hnw"
+	hnw -> "gvs XOR hnw"
+	"gvs XOR hnw" -> z25
+	"hcg OR cwb" [label=OR color=green]
+	hcg -> "hcg OR cwb"
+	cwb -> "hcg OR cwb"
+	"hcg OR cwb" -> djr
+	"hnh OR vfn" [label=OR color=green]
+	hnh -> "hnh OR vfn"
+	vfn -> "hnh OR vfn"
+	"hnh OR vfn" -> mtg
+	"hnw AND gvs" [label=AND color=red]
+	hnw -> "hnw AND gvs"
+	gvs -> "hnw AND gvs"
+	"hnw AND gvs" -> vdr
+	"hsd OR sng" [label=OR color=green]
+	hsd -> "hsd OR sng"
+	sng -> "hsd OR sng"
+	"hsd OR sng" -> z45
+	"htd OR scm" [label=OR color=green]
+	htd -> "htd OR scm"
+	scm -> "htd OR scm"
+	"htd OR scm" -> gpq
+	"jfh AND kmm" [label=AND color=red]
+	jfh -> "jfh AND kmm"
+	kmm -> "jfh AND kmm"
+	"jfh AND kmm" -> scm
+	"jtd AND qwj" [label=AND color=red]
+	jtd -> "jtd AND qwj"
+	qwj -> "jtd AND qwj"
+	"jtd AND qwj" -> bsf
+	"jtd XOR qwj" [label=XOR color=blue]
+	jtd -> "jtd XOR qwj"
+	qwj -> "jtd XOR qwj"
+	"jtd XOR qwj" -> z39
+	"kmm XOR jfh" [label=XOR color=blue]
+	kmm -> "kmm XOR jfh"
+	jfh -> "kmm XOR jfh"
+	"kmm XOR jfh" -> z43
+	"kpv XOR rvc" [label=XOR color=blue]
+	kpv -> "kpv XOR rvc"
+	rvc -> "kpv XOR rvc"
+	"kpv XOR rvc" -> swt
+	"kqk AND djr" [label=AND color=red]
+	kqk -> "kqk AND djr"
+	djr -> "kqk AND djr"
+	"kqk AND djr" -> z31
+	"ktp XOR rjm" [label=XOR color=blue]
+	ktp -> "ktp XOR rjm"
+	rjm -> "ktp XOR rjm"
+	"ktp XOR rjm" -> z24
+	"mcs OR jsj" [label=OR color=green]
+	mcs -> "mcs OR jsj"
+	jsj -> "mcs OR jsj"
+	"mcs OR jsj" -> vgj
+	"mnh XOR bqw" [label=XOR color=blue]
+	mnh -> "mnh XOR bqw"
+	bqw -> "mnh XOR bqw"
+	"mnh XOR bqw" -> z12
+	"msm AND fdm" [label=AND color=red]
+	msm -> "msm AND fdm"
+	fdm -> "msm AND fdm"
+	"msm AND fdm" -> cwb
+	"msm XOR fdm" [label=XOR color=blue]
+	msm -> "msm XOR fdm"
+	fdm -> "msm XOR fdm"
+	"msm XOR fdm" -> z30
+	"mtg AND gbv" [label=AND color=red]
+	mtg -> "mtg AND gbv"
+	gbv -> "mtg AND gbv"
+	"mtg AND gbv" -> ngw
+	"mtg XOR gbv" [label=XOR color=blue]
+	mtg -> "mtg XOR gbv"
+	gbv -> "mtg XOR gbv"
+	"mtg XOR gbv" -> z18
+	"ngv OR hhp" [label=OR color=green]
+	ngv -> "ngv OR hhp"
+	hhp -> "ngv OR hhp"
+	"ngv OR hhp" -> bmc
+	"ngw OR srm" [label=OR color=green]
+	ngw -> "ngw OR srm"
+	srm -> "ngw OR srm"
+	"ngw OR srm" -> frj
+	"nng AND rgh" [label=AND color=red]
+	nng -> "nng AND rgh"
+	rgh -> "nng AND rgh"
+	"nng AND rgh" -> npf
+	"nnh OR bjr" [label=OR color=green]
+	nnh -> "nnh OR bjr"
+	bjr -> "nnh OR bjr"
+	"nnh OR bjr" -> dfm
+	"nnt AND cbv" [label=AND color=red]
+	nnt -> "nnt AND cbv"
+	cbv -> "nnt AND cbv"
+	"nnt AND cbv" -> mcs
+	"nnt XOR cbv" [label=XOR color=blue]
+	nnt -> "nnt XOR cbv"
+	cbv -> "nnt XOR cbv"
+	"nnt XOR cbv" -> z21
+	"npf OR fvp" [label=OR color=green]
+	npf -> "npf OR fvp"
+	fvp -> "npf OR fvp"
+	"npf OR fvp" -> rrf
+	"pbh OR htn" [label=OR color=green]
+	pbh -> "pbh OR htn"
+	htn -> "pbh OR htn"
+	"pbh OR htn" -> ddq
+	"pbq OR dpv" [label=OR color=green]
+	pbq -> "pbq OR dpv"
+	dpv -> "pbq OR dpv"
+	"pbq OR dpv" -> tmr
+	"pfg AND csb" [label=AND color=red]
+	pfg -> "pfg AND csb"
+	csb -> "pfg AND csb"
+	"pfg AND csb" -> ppf
+	"pgp OR skw" [label=OR color=green]
+	pgp -> "pgp OR skw"
+	skw -> "pgp OR skw"
+	"pgp OR skw" -> cft
+	"pgq AND dwq" [label=AND color=red]
+	pgq -> "pgq AND dwq"
+	dwq -> "pgq AND dwq"
+	"pgq AND dwq" -> wpp
+	"pgt AND hbv" [label=AND color=red]
+	pgt -> "pgt AND hbv"
+	hbv -> "pgt AND hbv"
+	"pgt AND hbv" -> qdw
+	"pgt XOR hbv" [label=XOR color=blue]
+	pgt -> "pgt XOR hbv"
+	hbv -> "pgt XOR hbv"
+	"pgt XOR hbv" -> z23
+	"phn AND wph" [label=AND color=red]
+	phn -> "phn AND wph"
+	wph -> "phn AND wph"
+	"phn AND wph" -> cgf
+	"pmm XOR vgm" [label=XOR color=blue]
+	pmm -> "pmm XOR vgm"
+	vgm -> "pmm XOR vgm"
+	"pmm XOR vgm" -> z26
+	"pnf AND tmr" [label=AND color=red]
+	pnf -> "pnf AND tmr"
+	tmr -> "pnf AND tmr"
+	"pnf AND tmr" -> djt
+	"ppf OR ffm" [label=OR color=green]
+	ppf -> "ppf OR ffm"
+	ffm -> "ppf OR ffm"
+	"ppf OR ffm" -> bfg
+	"pqc AND fcr" [label=AND color=red]
+	pqc -> "pqc AND fcr"
+	fcr -> "pqc AND fcr"
+	"pqc AND fcr" -> cpf
+	"psj AND qbn" [label=AND color=red]
+	psj -> "psj AND qbn"
+	qbn -> "psj AND qbn"
+	"psj AND qbn" -> cth
+	"psj XOR qbn" [label=XOR color=blue]
+	psj -> "psj XOR qbn"
+	qbn -> "psj XOR qbn"
+	"psj XOR qbn" -> z29
+	"qfb OR snk" [label=OR color=green]
+	qfb -> "qfb OR snk"
+	snk -> "qfb OR snk"
+	"qfb OR snk" -> kmn
+	"qgc AND kfh" [label=AND color=red]
+	qgc -> "qgc AND kfh"
+	kfh -> "qgc AND kfh"
+	"qgc AND kfh" -> cfw
+	"qgc XOR kfh" [label=XOR color=blue]
+	qgc -> "qgc XOR kfh"
+	kfh -> "qgc XOR kfh"
+	"qgc XOR kfh" -> z06
+	"qqt AND vdb" [label=AND color=red]
+	qqt -> "qqt AND vdb"
+	vdb -> "qqt AND vdb"
+	"qqt AND vdb" -> mrt
+	"qsm XOR bqd" [label=XOR color=blue]
+	qsm -> "qsm XOR bqd"
+	bqd -> "qsm XOR bqd"
+	"qsm XOR bqd" -> z42
+	"rcd XOR rqt" [label=XOR color=blue]
+	rcd -> "rcd XOR rqt"
+	rqt -> "rcd XOR rqt"
+	"rcd XOR rqt" -> z37
+	"rft OR ncq" [label=OR color=green]
+	rft -> "rft OR ncq"
+	ncq -> "rft OR ncq"
+	"rft OR ncq" -> qwj
+	"rgh XOR nng" [label=XOR color=blue]
+	rgh -> "rgh XOR nng"
+	nng -> "rgh XOR nng"
+	"rgh XOR nng" -> z34
+	"rhn OR nmm" [label=OR color=green]
+	rhn -> "rhn OR nmm"
+	nmm -> "rhn OR nmm"
+	"rhn OR nmm" -> gnd
+	"rjm AND ktp" [label=AND color=red]
+	rjm -> "rjm AND ktp"
+	ktp -> "rjm AND ktp"
+	"rjm AND ktp" -> pwn
+	"rkw AND shk" [label=AND color=red]
+	rkw -> "rkw AND shk"
+	shk -> "rkw AND shk"
+	"rkw AND shk" -> pbq
+	"rqt AND rcd" [label=AND color=red]
+	rqt -> "rqt AND rcd"
+	rcd -> "rqt AND rcd"
+	"rqt AND rcd" -> sgv
+	"rrf AND qnw" [label=AND color=red]
+	rrf -> "rrf AND qnw"
+	qnw -> "rrf AND qnw"
+	"rrf AND qnw" -> dsf
+	"rrf XOR qnw" [label=XOR color=blue]
+	rrf -> "rrf XOR qnw"
+	qnw -> "rrf XOR qnw"
+	"rrf XOR qnw" -> z35
+	"rvc AND kpv" [label=AND color=red]
+	rvc -> "rvc AND kpv"
+	kpv -> "rvc AND kpv"
+	"rvc AND kpv" -> ghb
+	"sgv OR khs" [label=OR color=green]
+	sgv -> "sgv OR khs"
+	khs -> "sgv OR khs"
+	"sgv OR khs" -> brm
+	"shk XOR rkw" [label=XOR color=blue]
+	shk -> "shk XOR rkw"
+	rkw -> "shk XOR rkw"
+	"shk XOR rkw" -> z04
+	"skc OR bnc" [label=OR color=green]
+	skc -> "skc OR bnc"
+	bnc -> "skc OR bnc"
+	"skc OR bnc" -> kmm
+	"skt OR wpp" [label=OR color=green]
+	skt -> "skt OR wpp"
+	wpp -> "skt OR wpp"
+	"skt OR wpp" -> z13
+	"swt OR ghb" [label=OR color=green]
+	swt -> "swt OR ghb"
+	ghb -> "swt OR ghb"
+	"swt OR ghb" -> rgc
+	"thc XOR brj" [label=XOR color=blue]
+	thc -> "thc XOR brj"
+	brj -> "thc XOR brj"
+	"thc XOR brj" -> z01
+	"tmr XOR pnf" [label=XOR color=blue]
+	tmr -> "tmr XOR pnf"
+	pnf -> "tmr XOR pnf"
+	"tmr XOR pnf" -> z05
+	"tqj AND frj" [label=AND color=red]
+	tqj -> "tqj AND frj"
+	frj -> "tqj AND frj"
+	"tqj AND frj" -> rhn
+	"tqj XOR frj" [label=XOR color=blue]
+	tqj -> "tqj XOR frj"
+	frj -> "tqj XOR frj"
+	"tqj XOR frj" -> z19
+	"vcs XOR bfg" [label=XOR color=blue]
+	vcs -> "vcs XOR bfg"
+	bfg -> "vcs XOR bfg"
+	"vcs XOR bfg" -> z17
+	"vdb XOR qqt" [label=XOR color=blue]
+	vdb -> "vdb XOR qqt"
+	qqt -> "vdb XOR qqt"
+	"vdb XOR qqt" -> z28
+	"vdd AND dgk" [label=AND color=red]
+	vdd -> "vdd AND dgk"
+	dgk -> "vdd AND dgk"
+	"vdd AND dgk" -> wdr
+	"vdd XOR dgk" [label=XOR color=blue]
+	vdd -> "vdd XOR dgk"
+	dgk -> "vdd XOR dgk"
+	"vdd XOR dgk" -> z32
+	"vdr OR dkd" [label=OR color=green]
+	vdr -> "vdr OR dkd"
+	dkd -> "vdr OR dkd"
+	"vdr OR dkd" -> pmm
+	"vgj AND pms" [label=AND color=red]
+	vgj -> "vgj AND pms"
+	pms -> "vgj AND pms"
+	"vgj AND pms" -> cjw
+	"vgj XOR pms" [label=XOR color=blue]
+	vgj -> "vgj XOR pms"
+	pms -> "vgj XOR pms"
+	"vgj XOR pms" -> z22
+	"vgm AND pmm" [label=AND color=red]
+	vgm -> "vgm AND pmm"
+	pmm -> "vgm AND pmm"
+	"vgm AND pmm" -> sbq
+	"vjb OR mrt" [label=OR color=green]
+	vjb -> "vjb OR mrt"
+	mrt -> "vjb OR mrt"
+	"vjb OR mrt" -> psj
+	"vpv AND ddq" [label=AND color=red]
+	vpv -> "vpv AND ddq"
+	ddq -> "vpv AND ddq"
+	"vpv AND ddq" -> bjr
+	"vpv XOR ddq" [label=XOR color=blue]
+	vpv -> "vpv XOR ddq"
+	ddq -> "vpv XOR ddq"
+	"vpv XOR ddq" -> z09
+	"wdr OR htq" [label=OR color=green]
+	wdr -> "wdr OR htq"
+	htq -> "wdr OR htq"
+	"wdr OR htq" -> chd
+	"wgq OR kmg" [label=OR color=green]
+	wgq -> "wgq OR kmg"
+	kmg -> "wgq OR kmg"
+	"wgq OR kmg" -> rcd
+	"wmn OR nhd" [label=OR color=green]
+	wmn -> "wmn OR nhd"
+	nhd -> "wmn OR nhd"
+	"wmn OR nhd" -> mnh
+	"wph XOR phn" [label=XOR color=blue]
+	wph -> "wph XOR phn"
+	phn -> "wph XOR phn"
+	"wph XOR phn" -> z15
+	"wps AND kmn" [label=AND color=red]
+	wps -> "wps AND kmn"
+	kmn -> "wps AND kmn"
+	"wps AND kmn" -> pvw
+	"wps XOR kmn" [label=XOR color=blue]
+	wps -> "wps XOR kmn"
+	kmn -> "wps XOR kmn"
+	"wps XOR kmn" -> z03
+	"wpv XOR cwh" [label=XOR color=blue]
+	wpv -> "wpv XOR cwh"
+	cwh -> "wpv XOR cwh"
+	"wpv XOR cwh" -> z36
+	"wsv OR pwn" [label=OR color=green]
+	wsv -> "wsv OR pwn"
+	pwn -> "wsv OR pwn"
+	"wsv OR pwn" -> gvs
+	"wsw XOR bmc" [label=XOR color=blue]
+	wsw -> "wsw XOR bmc"
+	bmc -> "wsw XOR bmc"
+	"wsw XOR bmc" -> z02
+	"wvr AND gpq" [label=AND color=red]
+	wvr -> "wvr AND gpq"
+	gpq -> "wvr AND gpq"
+	"wvr AND gpq" -> hsd
+	"wvr XOR gpq" [label=XOR color=blue]
+	wvr -> "wvr XOR gpq"
+	gpq -> "wvr XOR gpq"
+	"wvr XOR gpq" -> z44
+	"x00 AND y00" [label=AND color=red]
+	x00 -> "x00 AND y00"
+	y00 -> "x00 AND y00"
+	"x00 AND y00" -> brj
+	"x01 AND y01" [label=AND color=red]
+	x01 -> "x01 AND y01"
+	y01 -> "x01 AND y01"
+	"x01 AND y01" -> hhp
+	"x02 XOR y02" [label=XOR color=blue]
+	x02 -> "x02 XOR y02"
+	y02 -> "x02 XOR y02"
+	"x02 XOR y02" -> wsw
+	"x03 XOR y03" [label=XOR color=blue]
+	x03 -> "x03 XOR y03"
+	y03 -> "x03 XOR y03"
+	"x03 XOR y03" -> wps
+	"x04 AND y04" [label=AND color=red]
+	x04 -> "x04 AND y04"
+	y04 -> "x04 AND y04"
+	"x04 AND y04" -> dpv
+	"x04 XOR y04" [label=XOR color=blue]
+	x04 -> "x04 XOR y04"
+	y04 -> "x04 XOR y04"
+	"x04 XOR y04" -> rkw
+	"x05 AND y05" [label=AND color=red]
+	x05 -> "x05 AND y05"
+	y05 -> "x05 AND y05"
+	"x05 AND y05" -> sbf
+	"x05 XOR y05" [label=XOR color=blue]
+	x05 -> "x05 XOR y05"
+	y05 -> "x05 XOR y05"
+	"x05 XOR y05" -> pnf
+	"x06 XOR y06" [label=XOR color=blue]
+	x06 -> "x06 XOR y06"
+	y06 -> "x06 XOR y06"
+	"x06 XOR y06" -> qgc
+	"x07 AND y07" [label=AND color=red]
+	x07 -> "x07 AND y07"
+	y07 -> "x07 AND y07"
+	"x07 AND y07" -> z07
+	"x08 AND y08" [label=AND color=red]
+	x08 -> "x08 AND y08"
+	y08 -> "x08 AND y08"
+	"x08 AND y08" -> htn
+	"x08 XOR y08" [label=XOR color=blue]
+	x08 -> "x08 XOR y08"
+	y08 -> "x08 XOR y08"
+	"x08 XOR y08" -> bcp
+	"x09 AND y09" [label=AND color=red]
+	x09 -> "x09 AND y09"
+	y09 -> "x09 AND y09"
+	"x09 AND y09" -> nnh
+	"x10 AND y10" [label=AND color=red]
+	x10 -> "x10 AND y10"
+	y10 -> "x10 AND y10"
+	"x10 AND y10" -> pgp
+	"x10 XOR y10" [label=XOR color=blue]
+	x10 -> "x10 XOR y10"
+	y10 -> "x10 XOR y10"
+	"x10 XOR y10" -> ggd
+	"x12 AND y12" [label=AND color=red]
+	x12 -> "x12 AND y12"
+	y12 -> "x12 AND y12"
+	"x12 AND y12" -> pmr
+	"x12 XOR y12" [label=XOR color=blue]
+	x12 -> "x12 XOR y12"
+	y12 -> "x12 XOR y12"
+	"x12 XOR y12" -> bqw
+	"x14 AND y14" [label=AND color=red]
+	x14 -> "x14 AND y14"
+	y14 -> "x14 AND y14"
+	"x14 AND y14" -> bsd
+	"x15 XOR y15" [label=XOR color=blue]
+	x15 -> "x15 XOR y15"
+	y15 -> "x15 XOR y15"
+	"x15 XOR y15" -> wph
+	"x16 XOR y16" [label=XOR color=blue]
+	x16 -> "x16 XOR y16"
+	y16 -> "x16 XOR y16"
+	"x16 XOR y16" -> csb
+	"x19 AND y19" [label=AND color=red]
+	x19 -> "x19 AND y19"
+	y19 -> "x19 AND y19"
+	"x19 AND y19" -> nmm
+	"x21 AND y21" [label=AND color=red]
+	x21 -> "x21 AND y21"
+	y21 -> "x21 AND y21"
+	"x21 AND y21" -> jsj
+	"x21 XOR y21" [label=XOR color=blue]
+	x21 -> "x21 XOR y21"
+	y21 -> "x21 XOR y21"
+	"x21 XOR y21" -> cbv
+	"x22 AND y22" [label=AND color=red]
+	x22 -> "x22 AND y22"
+	y22 -> "x22 AND y22"
+	"x22 AND y22" -> fmg
+	"x23 XOR y23" [label=XOR color=blue]
+	x23 -> "x23 XOR y23"
+	y23 -> "x23 XOR y23"
+	"x23 XOR y23" -> hbv
+	"x24 AND y24" [label=AND color=red]
+	x24 -> "x24 AND y24"
+	y24 -> "x24 AND y24"
+	"x24 AND y24" -> rjm
+	"x25 AND y25" [label=AND color=red]
+	x25 -> "x25 AND y25"
+	y25 -> "x25 AND y25"
+	"x25 AND y25" -> dkd
+	"x25 XOR y25" [label=XOR color=blue]
+	x25 -> "x25 XOR y25"
+	y25 -> "x25 XOR y25"
+	"x25 XOR y25" -> hnw
+	"x26 AND y26" [label=AND color=red]
+	x26 -> "x26 AND y26"
+	y26 -> "x26 AND y26"
+	"x26 AND y26" -> dmw
+	"x27 AND y27" [label=AND color=red]
+	x27 -> "x27 AND y27"
+	y27 -> "x27 AND y27"
+	"x27 AND y27" -> mgt
+	"x27 XOR y27" [label=XOR color=blue]
+	x27 -> "x27 XOR y27"
+	y27 -> "x27 XOR y27"
+	"x27 XOR y27" -> cdb
+	"x28 XOR y28" [label=XOR color=blue]
+	x28 -> "x28 XOR y28"
+	y28 -> "x28 XOR y28"
+	"x28 XOR y28" -> qqt
+	"x29 AND y29" [label=AND color=red]
+	x29 -> "x29 AND y29"
+	y29 -> "x29 AND y29"
+	"x29 AND y29" -> dgm
+	"x30 AND y30" [label=AND color=red]
+	x30 -> "x30 AND y30"
+	y30 -> "x30 AND y30"
+	"x30 AND y30" -> hcg
+	"x31 AND y31" [label=AND color=red]
+	x31 -> "x31 AND y31"
+	y31 -> "x31 AND y31"
+	"x31 AND y31" -> dvp
+	"x31 XOR y31" [label=XOR color=blue]
+	x31 -> "x31 XOR y31"
+	y31 -> "x31 XOR y31"
+	"x31 XOR y31" -> kqk
+	"x32 AND y32" [label=AND color=red]
+	x32 -> "x32 AND y32"
+	y32 -> "x32 AND y32"
+	"x32 AND y32" -> htq
+	"x32 XOR y32" [label=XOR color=blue]
+	x32 -> "x32 XOR y32"
+	y32 -> "x32 XOR y32"
+	"x32 XOR y32" -> dgk
+	"x33 AND y33" [label=AND color=red]
+	x33 -> "x33 AND y33"
+	y33 -> "x33 AND y33"
+	"x33 AND y33" -> vjs
+	"x34 AND y34" [label=AND color=red]
+	x34 -> "x34 AND y34"
+	y34 -> "x34 AND y34"
+	"x34 AND y34" -> fvp
+	"x35 AND y35" [label=AND color=red]
+	x35 -> "x35 AND y35"
+	y35 -> "x35 AND y35"
+	"x35 AND y35" -> tnt
+	"x37 AND y37" [label=AND color=red]
+	x37 -> "x37 AND y37"
+	y37 -> "x37 AND y37"
+	"x37 AND y37" -> khs
+	"x37 XOR y37" [label=XOR color=blue]
+	x37 -> "x37 XOR y37"
+	y37 -> "x37 XOR y37"
+	"x37 XOR y37" -> rqt
+	"x38 AND y38" [label=AND color=red]
+	x38 -> "x38 AND y38"
+	y38 -> "x38 AND y38"
+	"x38 AND y38" -> ncq
+	"x39 AND y39" [label=AND color=red]
+	x39 -> "x39 AND y39"
+	y39 -> "x39 AND y39"
+	"x39 AND y39" -> ccs
+	"x39 XOR y39" [label=XOR color=blue]
+	x39 -> "x39 XOR y39"
+	y39 -> "x39 XOR y39"
+	"x39 XOR y39" -> jtd
+	"x41 XOR y41" [label=XOR color=blue]
+	x41 -> "x41 XOR y41"
+	y41 -> "x41 XOR y41"
+	"x41 XOR y41" -> dns
+	"x42 AND y42" [label=AND color=red]
+	x42 -> "x42 AND y42"
+	y42 -> "x42 AND y42"
+	"x42 AND y42" -> bnc
+	"x42 XOR y42" [label=XOR color=blue]
+	x42 -> "x42 XOR y42"
+	y42 -> "x42 XOR y42"
+	"x42 XOR y42" -> qsm
+	"x43 AND y43" [label=AND color=red]
+	x43 -> "x43 AND y43"
+	y43 -> "x43 AND y43"
+	"x43 AND y43" -> htd
+	"x43 XOR y43" [label=XOR color=blue]
+	x43 -> "x43 XOR y43"
+	y43 -> "x43 XOR y43"
+	"x43 XOR y43" -> jfh
+	"y00 XOR x00" [label=XOR color=blue]
+	y00 -> "y00 XOR x00"
+	x00 -> "y00 XOR x00"
+	"y00 XOR x00" -> z00
+	"y01 XOR x01" [label=XOR color=blue]
+	y01 -> "y01 XOR x01"
+	x01 -> "y01 XOR x01"
+	"y01 XOR x01" -> thc
+	"y02 AND x02" [label=AND color=red]
+	y02 -> "y02 AND x02"
+	x02 -> "y02 AND x02"
+	"y02 AND x02" -> snk
+	"y03 AND x03" [label=AND color=red]
+	y03 -> "y03 AND x03"
+	x03 -> "y03 AND x03"
+	"y03 AND x03" -> btc
+	"y06 AND x06" [label=AND color=red]
+	y06 -> "y06 AND x06"
+	x06 -> "y06 AND x06"
+	"y06 AND x06" -> mwg
+	"y07 XOR x07" [label=XOR color=blue]
+	y07 -> "y07 XOR x07"
+	x07 -> "y07 XOR x07"
+	"y07 XOR x07" -> kpv
+	"y09 XOR x09" [label=XOR color=blue]
+	y09 -> "y09 XOR x09"
+	x09 -> "y09 XOR x09"
+	"y09 XOR x09" -> vpv
+	"y11 AND x11" [label=AND color=red]
+	y11 -> "y11 AND x11"
+	x11 -> "y11 AND x11"
+	"y11 AND x11" -> wmn
+	"y11 XOR x11" [label=XOR color=blue]
+	y11 -> "y11 XOR x11"
+	x11 -> "y11 XOR x11"
+	"y11 XOR x11" -> gsf
+	"y13 AND x13" [label=AND color=red]
+	y13 -> "y13 AND x13"
+	x13 -> "y13 AND x13"
+	"y13 AND x13" -> skt
+	"y13 XOR x13" [label=XOR color=blue]
+	y13 -> "y13 XOR x13"
+	x13 -> "y13 XOR x13"
+	"y13 XOR x13" -> dwq
+	"y14 XOR x14" [label=XOR color=blue]
+	y14 -> "y14 XOR x14"
+	x14 -> "y14 XOR x14"
+	"y14 XOR x14" -> fcr
+	"y15 AND x15" [label=AND color=red]
+	y15 -> "y15 AND x15"
+	x15 -> "y15 AND x15"
+	"y15 AND x15" -> kgh
+	"y16 AND x16" [label=AND color=red]
+	y16 -> "y16 AND x16"
+	x16 -> "y16 AND x16"
+	"y16 AND x16" -> ffm
+	"y17 AND x17" [label=AND color=red]
+	y17 -> "y17 AND x17"
+	x17 -> "y17 AND x17"
+	"y17 AND x17" -> vfn
+	"y17 XOR x17" [label=XOR color=blue]
+	y17 -> "y17 XOR x17"
+	x17 -> "y17 XOR x17"
+	"y17 XOR x17" -> vcs
+	"y18 AND x18" [label=AND color=red]
+	y18 -> "y18 AND x18"
+	x18 -> "y18 AND x18"
+	"y18 AND x18" -> srm
+	"y18 XOR x18" [label=XOR color=blue]
+	y18 -> "y18 XOR x18"
+	x18 -> "y18 XOR x18"
+	"y18 XOR x18" -> gbv
+	"y19 XOR x19" [label=XOR color=blue]
+	y19 -> "y19 XOR x19"
+	x19 -> "y19 XOR x19"
+	"y19 XOR x19" -> tqj
+	"y20 AND x20" [label=AND color=red]
+	y20 -> "y20 AND x20"
+	x20 -> "y20 AND x20"
+	"y20 AND x20" -> ccp
+	"y20 XOR x20" [label=XOR color=blue]
+	y20 -> "y20 XOR x20"
+	x20 -> "y20 XOR x20"
+	"y20 XOR x20" -> ddh
+	"y22 XOR x22" [label=XOR color=blue]
+	y22 -> "y22 XOR x22"
+	x22 -> "y22 XOR x22"
+	"y22 XOR x22" -> pms
+	"y23 AND x23" [label=AND color=red]
+	y23 -> "y23 AND x23"
+	x23 -> "y23 AND x23"
+	"y23 AND x23" -> cms
+	"y24 XOR x24" [label=XOR color=blue]
+	y24 -> "y24 XOR x24"
+	x24 -> "y24 XOR x24"
+	"y24 XOR x24" -> wsv
+	"y26 XOR x26" [label=XOR color=blue]
+	y26 -> "y26 XOR x26"
+	x26 -> "y26 XOR x26"
+	"y26 XOR x26" -> vgm
+	"y28 AND x28" [label=AND color=red]
+	y28 -> "y28 AND x28"
+	x28 -> "y28 AND x28"
+	"y28 AND x28" -> vjb
+	"y29 XOR x29" [label=XOR color=blue]
+	y29 -> "y29 XOR x29"
+	x29 -> "y29 XOR x29"
+	"y29 XOR x29" -> qbn
+	"y30 XOR x30" [label=XOR color=blue]
+	y30 -> "y30 XOR x30"
+	x30 -> "y30 XOR x30"
+	"y30 XOR x30" -> fdm
+	"y33 XOR x33" [label=XOR color=blue]
+	y33 -> "y33 XOR x33"
+	x33 -> "y33 XOR x33"
+	"y33 XOR x33" -> mrp
+	"y34 XOR x34" [label=XOR color=blue]
+	y34 -> "y34 XOR x34"
+	x34 -> "y34 XOR x34"
+	"y34 XOR x34" -> rgh
+	"y35 XOR x35" [label=XOR color=blue]
+	y35 -> "y35 XOR x35"
+	x35 -> "y35 XOR x35"
+	"y35 XOR x35" -> qnw
+	"y36 AND x36" [label=AND color=red]
+	y36 -> "y36 AND x36"
+	x36 -> "y36 AND x36"
+	"y36 AND x36" -> wgq
+	"y36 XOR x36" [label=XOR color=blue]
+	y36 -> "y36 XOR x36"
+	x36 -> "y36 XOR x36"
+	"y36 XOR x36" -> cwh
+	"y38 XOR x38" [label=XOR color=blue]
+	y38 -> "y38 XOR x38"
+	x38 -> "y38 XOR x38"
+	"y38 XOR x38" -> dtr
+	"y40 AND x40" [label=AND color=red]
+	y40 -> "y40 AND x40"
+	x40 -> "y40 AND x40"
+	"y40 AND x40" -> rbw
+	"y40 XOR x40" [label=XOR color=blue]
+	y40 -> "y40 XOR x40"
+	x40 -> "y40 XOR x40"
+	"y40 XOR x40" -> bps
+	"y41 AND x41" [label=AND color=red]
+	y41 -> "y41 AND x41"
+	x41 -> "y41 AND x41"
+	"y41 AND x41" -> vqn
+	"y44 AND x44" [label=AND color=red]
+	y44 -> "y44 AND x44"
+	x44 -> "y44 AND x44"
+	"y44 AND x44" -> sng
+	"y44 XOR x44" [label=XOR color=blue]
+	y44 -> "y44 XOR x44"
+	x44 -> "y44 XOR x44"
+	"y44 XOR x44" -> wvr
+}
