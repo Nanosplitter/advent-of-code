@@ -11,25 +11,26 @@
 // Linux: ~/.config/Code/User/keybindings.json
 
 [
-  // Run tasks (without debugging) - Using Ctrl+Shift+Alt combinations
+  // DEBUG with breakpoints - Using Ctrl+Shift+Alt combinations
   {
     "key": "ctrl+shift+alt+1",
-    "command": "workbench.action.tasks.runTask",
-    "args": "🎄 AOC: Run with Input",
+    "command": "workbench.action.debug.selectandstart",
+    "args": "🎄 Run with Input",
     "when": "editorTextFocus && resourceExtname == '.py'"
   },
   {
     "key": "ctrl+shift+alt+2",
-    "command": "workbench.action.tasks.runTask",
-    "args": "📋 AOC: Run with Example",
+    "command": "workbench.action.debug.selectandstart",
+    "args": "📋 Run with Example",
     "when": "editorTextFocus && resourceExtname == '.py'"
   },
   {
     "key": "ctrl+shift+alt+3",
-    "command": "workbench.action.tasks.runTask",
-    "args": "🔬 AOC: Run with Simple",
+    "command": "workbench.action.debug.selectandstart",
+    "args": "🔬 Run with Simple",
     "when": "editorTextFocus && resourceExtname == '.py'"
   },
+  // Run All (task, no debugging - runs side by side)
   {
     "key": "ctrl+shift+alt+a",
     "command": "workbench.action.tasks.runTask",
