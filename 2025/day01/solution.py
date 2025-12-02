@@ -1,4 +1,25 @@
-def part1(rotations: list[(str, int)]) -> int:
+"""
+Advent of Code 2025 - Day 1
+"""
+
+import sys
+
+sys.path.insert(0, str(__file__).split("2025")[0])
+from libraries.aoc_runner import run
+
+
+def parse(lines: list[str]) -> list[tuple[str, int]]:
+    """Parse lines into list of (direction, amount) tuples."""
+    rotations = []
+    for line in lines:
+        if line.strip():
+            direction = line[0]
+            amount = int(line[1:])
+            rotations.append((direction, amount))
+    return rotations
+
+
+def part1(rotations: list[tuple[str, int]]) -> int:
     dial = 50
 
     count = 0
@@ -17,7 +38,7 @@ def part1(rotations: list[(str, int)]) -> int:
     return count
 
 
-def part2(rotations: list[(str, int)]) -> int:
+def part2(rotations: list[tuple[str, int]]) -> int:
     dial = 50
     count = 0
 
@@ -46,15 +67,5 @@ def part2(rotations: list[(str, int)]) -> int:
     return count
 
 
-with open("./input.txt") as f:
-    input = f.readlines()
-    rotations = []
-
-    for line in input:
-        direction = line[0]
-        amount = int(line[1:])
-
-        rotations.append((direction, amount))
-
-    print(part1(rotations))
-    print(part2(rotations))
+if __name__ == "__main__":
+    run(part1, part2, parser=parse)

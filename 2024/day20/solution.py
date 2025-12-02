@@ -1,7 +1,5 @@
 from collections import defaultdict, Counter
-import os
 import sys
-import time
 import curses
 
 UP = (-1, 0)

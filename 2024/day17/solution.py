@@ -81,7 +81,7 @@ class Computer:
             
             if visualize:
                 os.system('cls||clear')
-                print(f"Registries:")
+                print("Registries:")
                 print(f"A: {colored(self.registers[A], 'red')}")
                 print(f"B: {colored(self.registers[B], 'green')}")
                 print(f"C: {colored(self.registers[C], 'blue')}")

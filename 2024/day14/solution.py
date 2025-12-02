@@ -2,7 +2,6 @@ import sys
 from functools import reduce
 from operator import mul
 
-import time
 
 class Robot:
     def __init__(self, position, velocity, board_width, board_height):
