@@ -1,0 +1,39 @@
+// Advent of Code Keybindings
+//
+// To use these, add them to your VS Code keybindings.json:
+// 1. Press Ctrl+Shift+P
+// 2. Type "Preferences: Open Keyboard Shortcuts (JSON)"
+// 3. Add these entries to the array
+//
+// Or copy keybindings.json to your user settings folder:
+// Windows: %APPDATA%\Code\User\keybindings.json
+// macOS: ~/Library/Application Support/Code/User/keybindings.json
+// Linux: ~/.config/Code/User/keybindings.json
+
+[
+  // Run tasks (without debugging) - Using Ctrl+Shift+Alt combinations
+  {
+    "key": "ctrl+shift+alt+1",
+    "command": "workbench.action.tasks.runTask",
+    "args": "🎄 AOC: Run with Input",
+    "when": "editorTextFocus && resourceExtname == '.py'"
+  },
+  {
+    "key": "ctrl+shift+alt+2",
+    "command": "workbench.action.tasks.runTask",
+    "args": "📋 AOC: Run with Example",
+    "when": "editorTextFocus && resourceExtname == '.py'"
+  },
+  {
+    "key": "ctrl+shift+alt+3",
+    "command": "workbench.action.tasks.runTask",
+    "args": "🔬 AOC: Run with Simple",
+    "when": "editorTextFocus && resourceExtname == '.py'"
+  },
+  {
+    "key": "ctrl+shift+alt+a",
+    "command": "workbench.action.tasks.runTask",
+    "args": "🚀 AOC: Run All Inputs",
+    "when": "editorTextFocus && resourceExtname == '.py'"
+  }
+]
