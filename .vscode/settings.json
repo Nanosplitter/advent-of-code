@@ -1,6 +1,14 @@
 {
   "cSpell.words": ["antinodes"],
-  "conventionalCommits.scopes": ["2025_day01", "aoc", "libraries", "formatting", "2025_day02", "2025_day03"],
+  "conventionalCommits.scopes": [
+    "2025_day01",
+    "aoc",
+    "libraries",
+    "formatting",
+    "2025_day02",
+    "2025_day03",
+    "2025_day05"
+  ],
 
   // Python settings for AOC
   "python.terminal.executeInFileDir": true,
